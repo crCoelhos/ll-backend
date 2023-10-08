@@ -1,28 +1,39 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Lawyer extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       this.belongsTo(models.User, {
-        foreignKey: 'id',
+        foreignKey: 'userId',
         as: 'user',
+      });
+
+      this.belongsToMany(models.Expertise, {
+        through: 'LawyerExpertise',
+        foreignKey: 'lawyerId',
+        as: 'expertises',
       });
     }
   }
-  Lawyer.init({
-    name: DataTypes.STRING,
-    specialization: DataTypes.STRING,
-    license: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Lawyer',
-  });
+
+  Lawyer.init(
+    {
+      OAB: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      riteDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Lawyer',
+      tableName: 'Lawyers',
+    }
+  );
+
   return Lawyer;
 };

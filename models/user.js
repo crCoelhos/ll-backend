@@ -18,10 +18,27 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      CPF: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      birthdate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+      },
+      passwordRecoveryToken: {
+        type: DataTypes.STRING,
+        allowNull: true
+      }
     },
     {
       sequelize,
