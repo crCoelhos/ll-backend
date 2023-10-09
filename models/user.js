@@ -3,6 +3,7 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
+
     static associate(models) {
       User.belongsToMany(models.Address, {
         through: models.UserAddress,
@@ -10,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
         as: 'addresses',
       });
     }
+    
+
   }
 
   User.init(
