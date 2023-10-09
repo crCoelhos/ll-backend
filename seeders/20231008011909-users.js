@@ -10,6 +10,7 @@ module.exports = {
         birthdate: '1990-01-01',
         password: await bcrypt.hash('senha123', 10),
         isActive: true,
+        roleId: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
