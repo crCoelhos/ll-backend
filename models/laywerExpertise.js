@@ -1,42 +1,50 @@
 'use strict';
+const { Model } = require('sequelize');
 
-module.exports = {
-    up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('LawyerExpertises', {
-            id: {
-                allowNull: false,
-                autoIncrement: true,
-                primaryKey: true,
-                type: Sequelize.INTEGER,
-            },
-            lawyerId: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: 'Lawyers',
-                    key: 'id',
-                },
-                allowNull: false,
-            },
-            expertiseId: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: 'Expertises',
-                    key: 'id',
-                },
-                allowNull: false,
-            },
-            createdAt: {
-                allowNull: false,
-                type: Sequelize.DATE,
-            },
-            updatedAt: {
-                allowNull: false,
-                type: Sequelize.DATE,
-            },
-        });
+module.exports = (sequelize, DataTypes) => {
+  class LawyerExpertises extends Model {
+    static associate(models) {
+    }
+  }
+  LawyerExpertises.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      lawyerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Lawyers',
+          key: 'id',
+        },
+      },
+      expertiseId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Expertises',
+          key: 'id',
+        },
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
     },
+    {
+      sequelize,
+      modelName: 'LawyerExpertises',
+      tableName: 'LawyerExpertises',
+    }
+  );
 
-    down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('LawyerExpertises');
-    },
+  return LawyerExpertises;
 };

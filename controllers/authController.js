@@ -6,10 +6,10 @@ const { User } = require('../models');
 
 async function signup(req, res) {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, CPF, birthdate } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.create({ name, email, password: hashedPassword });
+    const user = await User.create({ name, email, password: hashedPassword, CPF, birthdate });
 
     res.status(201).json({ user });
   } catch (error) {
