@@ -43,6 +43,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      roleId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Roles',
+          key: 'id',
+        },
+      },
       isActive: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
