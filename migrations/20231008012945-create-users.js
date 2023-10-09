@@ -35,6 +35,14 @@ module.exports = {
         allowNull: false,
         defaultValue: true,
       },
+      roleId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Roles',
+          key: 'id'
+        },
+      },
       passwordRecoveryToken: {
         type: Sequelize.STRING,
         allowNull: true,
