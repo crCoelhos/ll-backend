@@ -7,7 +7,7 @@ router.get('/user/teste', (req, res) => {
     res.status(200).json({ message: 'teste' });
 });
 
-router.get('/user/', userController.getAllUsers);
+router.get('/users/', userController.getAllUsers);
 router.get('/user/:id', userController.getUserById);
 router.post('/user/', userController.createUser);
 router.put('/user/:id', userController.updateUserById);

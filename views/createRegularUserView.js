@@ -7,6 +7,8 @@ SELECT
   u.name AS user_name,
   u.email AS user_email,
   a.state AS address_state,
+  u.roleId AS user_role,
+  u.isActive AS is_user_active,
   a.street AS address_street,
   a.city AS address_city,
   a.CEP AS address_CEP

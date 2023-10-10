@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const db = require('../models');
 const User = db.User;
 
-// TEM QUE ARRUMAR VALIDAÇÃO COM 
+// TEM QUE ARRUMAR VALIDAÇÃO COM ROLE E JWT
 
 
 async function createUser(req, res) {
@@ -41,10 +41,6 @@ async function createUser(req, res) {
     }
 }
 
-
-
-
-
 async function getAllUsers(req, res) {
     try {
 
@@ -59,6 +55,7 @@ async function getAllUsers(req, res) {
         res.status(500).json({ message: err.message });
     }
 }
+
 async function getUserById(req, res) {
     try {
 
