@@ -4,7 +4,7 @@ const roleController = require('../controllers/roleController.js');
 
 // teste
 router.get('/role/teste', (req, res) => {
-    res.status(200).json({ message: 'teste' });
+    res.status(200).json({ message: 'role teste' });
 });
 
 router.get('/roles/', roleController.getAllRoles);

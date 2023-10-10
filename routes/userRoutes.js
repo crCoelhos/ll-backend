@@ -4,7 +4,7 @@ const userController = require('../controllers/userController.js');
 
 // teste
 router.get('/user/teste', (req, res) => {
-    res.status(200).json({ message: 'teste' });
+    res.status(200).json({ message: 'user teste' });
 });
 
 router.get('/users/', userController.getAllUsers);
