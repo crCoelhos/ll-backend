@@ -1,13 +1,70 @@
 const bcrypt = require('bcrypt');
 const db = require('../models');
 const User = db.User;
+const Address = db.Address;
+const UserAddress = db.UserAddress;
 
 // TEM QUE ARRUMAR VALIDAÇÃO COM ROLE E JWT
 
 
+// async function createUser(req, res) {
+//     try {
+//         const { name, email, CPF, birthdate, password, OAB, riteDate, roleId, address } = req.body;
+
+//         let user = await User.findOne({
+//             where: { CPF: CPF }
+//         });
+
+//         if (!user) {
+//             const hashedPassword = await bcrypt.hash(password, 10);
+//             user = await User.create({
+//                 name: name,
+//                 email: email,
+//                 CPF: CPF,
+//                 birthdate: birthdate,
+//                 password: hashedPassword,
+//                 roleId: roleId // Definir roleId com o valor recebido no corpo da solicitação
+//             });
+//         }
+
+
+
+//         const createdAddress = await Address.create({
+//             street: address.street,
+//             city: address.city,
+//             state: address.state,
+//             CEP: address.CEP,
+//             userId: user.id
+//         });
+
+//         await UserAddress.create({
+//             userId: user.id,
+//             addressId: createdAddress.id,
+//         });
+
+//         if (OAB && riteDate) {
+//             const lawyer = await Lawyer.create({
+//                 OAB: OAB,
+//                 riteDate: riteDate,
+//                 userId: user.id
+//             });
+//             res.status(201).json(lawyer);
+//         } else {
+//             res.status(201).json(user);
+//         }
+
+
+//     } catch (err) {
+//         console.error('Erro no createUser:', err, req.body);
+//         res.status(500).json({ message: 'Ocorreu um erro interno.' });
+//     }
+// }
+
 async function createUser(req, res) {
+    const t = await db.sequelize.transaction();
+    let createdAddress;
     try {
-        const { name, email, CPF, birthdate, password, OAB, riteDate, roleId } = req.body;
+        const { name, email, CPF, birthdate, password, OAB, riteDate, roleId, address } = req.body;
 
         let user = await User.findOne({
             where: { CPF: CPF }
@@ -21,11 +78,34 @@ async function createUser(req, res) {
                 CPF: CPF,
                 birthdate: birthdate,
                 password: hashedPassword,
-                roleId: roleId // Definir roleId com o valor recebido no corpo da solicitação
+                roleId: roleId
+            }, { transaction: t });
+
+
+            // isso aqui
+            createdAddress = await Address.create({
+                street: address.street,
+                city: address.city,
+                state: address.state,
+                CEP: address.CEP,
+                userId: user.id
+            }, { transaction: t });
+        }
+
+        if (createdAddress) {
+            console.log('CRIANDO ADDRESS')
+
+            await UserAddress.create({
+                userId: user.id,
+                addressId: createdAddress.id,
             });
+        } else {
+            console.log('DEU RUIM NO ADDRESS')
+
         }
 
         if (OAB && riteDate) {
+            console.log('CRIANDO LAWYER')
             const lawyer = await Lawyer.create({
                 OAB: OAB,
                 riteDate: riteDate,
@@ -35,11 +115,16 @@ async function createUser(req, res) {
         } else {
             res.status(201).json(user);
         }
+
+        await t.commit();
     } catch (err) {
         console.error('Erro no createUser:', err, req.body);
+        await t.rollback();
         res.status(500).json({ message: 'Ocorreu um erro interno.' });
     }
 }
+
+
 
 async function getAllUsers(req, res) {
     try {
