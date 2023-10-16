@@ -4,12 +4,13 @@ const Address = db.Address;
 
 async function createAddress(req, res) {
     try {
-        const { state, street, city, CEP } = req.body;
+        const { state, street, city, CEP, userId } = req.body;
         const address = await Address.create({
             state: state,
             street: street,
             city: city,
             CEP: CEP,
+            userId: userId,
         });
         res.status(201).json(address);
 

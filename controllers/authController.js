@@ -2,14 +2,28 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { User } = require('../models');
+const { User, Address } = require('../models');
 
 async function signup(req, res) {
   try {
-    const { name, email, password, CPF, birthdate } = req.body;
+    const { name, email, password, CPF, birthdate, address } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.create({ name, email, password: hashedPassword, CPF, birthdate });
+    if (!address) {
+      return res.status(400).json({ error: 'O endereço é obrigatório.' });
+    }
+
+    const userData = { name, email, password: hashedPassword, roleId: 1, CPF, birthdate };
+    const user = await User.create(userData);
+
+    const addressData = {
+      state: address.state,
+      street: address.street,
+      city: address.city,
+      CEP: address.CEP,
+      userId: user.id,
+    };
+    await Address.create(addressData);
 
     res.status(201).json({ user });
   } catch (error) {
@@ -17,6 +31,7 @@ async function signup(req, res) {
     res.status(500).json({ error: 'Erro ao criar usuário.' });
   }
 }
+
 
 async function signin(req, res) {
   try {

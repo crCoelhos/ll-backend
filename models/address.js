@@ -3,10 +3,9 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Address extends Model {
         static associate(models) {
-            Address.belongsToMany(models.User, {
-                through: models.UserAddress,
-                foreignKey: 'addressId',
-                as: 'users',
+            Address.belongsTo(models.User, {
+                foreignKey: 'userId',
+                onDelete: 'CASCADE',
             });
         }
     }
@@ -28,7 +27,11 @@ module.exports = (sequelize, DataTypes) => {
             CEP: {
                 type: DataTypes.STRING,
                 allowNull: false
-            }
+            },
+            userId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
         },
         {
             sequelize,
