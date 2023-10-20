@@ -7,8 +7,10 @@ async function createAppointment(req, res) {
         const { title, start, end, description } = req.body;
         const newAppointment = await Appointment.create({
             title,
-            start,
-            end,
+            dateStart,
+            dateEnd,
+            startingTime,
+            endingTime,
             description,
             userId,
         });

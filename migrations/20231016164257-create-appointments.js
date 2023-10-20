@@ -13,13 +13,19 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            start: {
-                type: Sequelize.DATE,
+            dateStart: {
+                type: Sequelize.DATEONLY,
                 allowNull: false,
             },
-            end: {
-                type: Sequelize.DATE,
+            dateEnd: {
+                type: Sequelize.DATEONLY,
                 allowNull: false,
+            },
+            startingTime: {
+                type: Sequelize.TIME,
+            },
+            endingTime: {
+                type: Sequelize.TIME,
             },
             description: {
                 type: Sequelize.STRING,
