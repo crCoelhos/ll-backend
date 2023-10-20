@@ -4,7 +4,7 @@ const { Appointment } = require('../models');
 async function createAppointment(req, res) {
     try {
         const userId = req.user.id;
-        const { title, start, end, description } = req.body;
+        const { title, dateStart, dateEnd, startingTime, endingTime, description } = req.body;
         const newAppointment = await Appointment.create({
             title,
             dateStart,
