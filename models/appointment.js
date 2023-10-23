@@ -23,10 +23,16 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING,
     },
+    isPrivate: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 0,
+      allowNull: false
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+
   });
 
   Appointment.associate = (models) => {

@@ -30,6 +30,11 @@ module.exports = {
             description: {
                 type: Sequelize.STRING,
             },
+            isPrivate: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: 0,
+                allowNull: false,
+            },
             userId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
