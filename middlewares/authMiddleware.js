@@ -10,11 +10,12 @@ async function authMiddleware(req, res, next) {
         return res.status(401).json({ message: 'Acesso não autorizado. Faça login para continuar.' });
     }
     try {
-        const decoded = jwt.verify(authHeader, config.jwt_token);
-        const user = await User.findByPk(decoded.id);
-
+        const decoded = jwt.verify(authHeader, config.jwtSecret);
+        const user = await User.findByPk(decoded.userId);
         if (!user) {
-            return res.status(401).json({ message: 'Usuário não encontrado.' });
+            console.log(decoded.userId)
+            // ta decodificando direito mas e
+            return res.status(401).json({ message: '(auth 1)Usuário não encontrado.' });
         }
 
         //const roles = Array.isArray(decoded.roles) ? decoded.roles : [];
@@ -32,7 +33,7 @@ async function authMiddleware(req, res, next) {
         if (error.name === 'TokenExpiredError') {
             return res.status(401).json({ error: 'Sua sessão expirou. Faça login novamente.' });
         }
-        res.status(401).json({ error ,message: 'Acesso não autorizado. Faça login para continuaraaa.' });
+        res.status(401).json({ error, message: 'Acesso não autorizado. Faça login para continuaraaa.' });
     }
 }
 

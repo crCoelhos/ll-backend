@@ -8,11 +8,11 @@ const addressRoutes = require('./addressRoutes');
 const authRoutes = require('./authRoutes')
 const appointmentRoutes = require('./appointmentRoutes')
 
-router.use('/v1', userRoutes);
-router.use('/v1', appointmentRoutes);
-router.use('/v1', roleRoutes);
-router.use('/v1', expertiseRoutes);
-router.use('/v1', addressRoutes);
-router.use('/v1', authRoutes)
+router.use('/v1', authRoutes, userRoutes);
+router.use('/v1', authRoutes, appointmentRoutes);
+router.use('/v1', authRoutes, roleRoutes);
+router.use('/v1', authRoutes, expertiseRoutes);
+router.use('/v1', authRoutes, addressRoutes);
+router.use('/v1', authRoutes, authRoutes)
 
 module.exports = router;
