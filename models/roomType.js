@@ -1,8 +1,8 @@
 // models/roomType.js
 'use strict';
-const { Model } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize) => {
     class RoomType extends Model {
         static associate(models) {
             RoomType.hasMany(models.Workspace,
@@ -26,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: 'RoomType',
-            tableName: 'RoomTypes',
         }
     );
 
