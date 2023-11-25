@@ -1,7 +1,6 @@
 const db = require('../models');
 const Role = db.Role;
 
-// TEM QUE ARRUMAR VALIDAÇÃO COM ROLE E JWT
 
 
 async function createRole(req, res) {
