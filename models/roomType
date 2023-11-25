@@ -1,0 +1,34 @@
+// models/roomType.js
+'use strict';
+const { Model } = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
+    class RoomType extends Model {
+        static associate(models) {
+            RoomType.hasMany(models.Workspace,
+                {
+                    foreignKey: 'roomTypeId'
+                });
+        }
+    }
+
+    RoomType.init(
+        {
+            typeName: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            description: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+        },
+        {
+            sequelize,
+            modelName: 'RoomType',
+            tableName: 'RoomTypes',
+        }
+    );
+
+    return RoomType;
+};
