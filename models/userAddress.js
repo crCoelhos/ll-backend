@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
+
   UserAddress.init(
     {
       userId: {

@@ -4,10 +4,10 @@ const User = db.User;
 const Address = db.Address;
 const UserAddress = db.UserAddress;
 
-// TEM QUE ARRUMAR VALIDAÇÃO COM ROLE E JWT
-
 
 // async function createUser(req, res) {
+//     const t = await db.sequelize.transaction();
+//     let createdAddress;
 //     try {
 //         const { name, email, CPF, birthdate, password, OAB, riteDate, roleId, address } = req.body;
 
@@ -23,26 +23,40 @@ const UserAddress = db.UserAddress;
 //                 CPF: CPF,
 //                 birthdate: birthdate,
 //                 password: hashedPassword,
-//                 roleId: roleId // Definir roleId com o valor recebido no corpo da solicitação
-//             });
+//                 roleId: roleId
+//             }, { transaction: t });
+
+
+//             // isso aqui
+//             createdAddress = await Address.create({
+//                 street: address.street,
+//                 city: address.city,
+//                 state: address.state,
+//                 CEP: address.CEP,
+//                 userId: user.id
+//             }, { transaction: t });
+//         } else {
+//             console.log('Usuário já existe');
+//             res.status(400).json({ message: 'O usuário já existe.' });
+//             await t.rollback();
+//             return;
 //         }
 
+//         if (createdAddress) {
+//             console.log('CRIANDO ADDRESS')
 
+//             await UserAddress.create({
+//                 userId: user.id,
+//                 // addressId: createdAddress.id,
+//             });
 
-//         const createdAddress = await Address.create({
-//             street: address.street,
-//             city: address.city,
-//             state: address.state,
-//             CEP: address.CEP,
-//             userId: user.id
-//         });
+//         } else {
+//             console.log('DEU RUIM NO ADDRESS')
 
-//         await UserAddress.create({
-//             userId: user.id,
-//             addressId: createdAddress.id,
-//         });
+//         }
 
 //         if (OAB && riteDate) {
+//             console.log('CRIANDO LAWYER')
 //             const lawyer = await Lawyer.create({
 //                 OAB: OAB,
 //                 riteDate: riteDate,
@@ -53,16 +67,16 @@ const UserAddress = db.UserAddress;
 //             res.status(201).json(user);
 //         }
 
-
+//         await t.commit();
 //     } catch (err) {
 //         console.error('Erro no createUser:', err, req.body);
+//         await t.rollback();
 //         res.status(500).json({ message: 'Ocorreu um erro interno.' });
 //     }
 // }
 
 async function createUser(req, res) {
     const t = await db.sequelize.transaction();
-    let createdAddress;
     try {
         const { name, email, CPF, birthdate, password, OAB, riteDate, roleId, address } = req.body;
 
@@ -81,27 +95,25 @@ async function createUser(req, res) {
                 roleId: roleId
             }, { transaction: t });
 
+            console.log('Usuário criado com sucesso.');
 
-            // isso aqui
-            createdAddress = await Address.create({
+            //  endereço depois do user criaod
+            const createdAddress = await Address.create({
                 street: address.street,
                 city: address.city,
                 state: address.state,
                 CEP: address.CEP,
                 userId: user.id
             }, { transaction: t });
-        }
 
-        if (createdAddress) {
-            console.log('CRIANDO ADDRESS')
+            console.log('Endereço criado com sucesso.');
 
-            await UserAddress.create({
-                userId: user.id,
-                addressId: createdAddress.id,
-            });
+
         } else {
-            console.log('DEU RUIM NO ADDRESS')
-
+            console.log('Usuário já existe');
+            res.status(400).json({ message: 'O usuário já existe.' });
+            await t.rollback();
+            return;
         }
 
         if (OAB && riteDate) {
@@ -110,7 +122,7 @@ async function createUser(req, res) {
                 OAB: OAB,
                 riteDate: riteDate,
                 userId: user.id
-            });
+            }, { transaction: t });
             res.status(201).json(lawyer);
         } else {
             res.status(201).json(user);
@@ -123,7 +135,6 @@ async function createUser(req, res) {
         res.status(500).json({ message: 'Ocorreu um erro interno.' });
     }
 }
-
 
 
 async function getAllUsers(req, res) {

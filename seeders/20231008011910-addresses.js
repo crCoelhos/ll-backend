@@ -17,7 +17,7 @@ module.exports = {
         street: 'YourStreet2',
         city: 'YourCity2',
         CEP: 'YourCEP2',
-        userId: 1,
+        userId: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

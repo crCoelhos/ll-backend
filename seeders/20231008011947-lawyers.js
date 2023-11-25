@@ -6,7 +6,7 @@ module.exports = {
       {
         OAB: '123456',
         riteDate: '2022-01-01',
-        userId: 1,
+        userId: 3,
       },
     ];
 
