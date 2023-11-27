@@ -3,12 +3,12 @@ const Workspace = db.Workspace;
 
 async function createWorkspace(req, res) {
   try {
-    const { name, description, capacity, roomTypeId } = req.body;
+    const { name, description, capacity, workspaceTypeId } = req.body;
     const workspace = await Workspace.create({
       name,
       description,
       capacity,
-      roomTypeId,
+      workspaceTypeId,
     });
     res.status(201).json(workspace);
   } catch (err) {

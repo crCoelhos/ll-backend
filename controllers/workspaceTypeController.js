@@ -1,27 +1,27 @@
 const db = require('../models');
-const RoomType = db.RoomType;
+const WorkspaceType = db.WorkspaceType;
 
 
 
-async function createRoomType(req, res) {
+async function createWorkspaceType(req, res) {
     try {
         const { name, description } = req.body;
-        const role = await RoomType.create({
+        const role = await WorkspaceType.create({
             name: name,
             description: description,
         });
         res.status(201).json(role);
 
     } catch (err) {
-        console.error('Erro no createRoomType:', err, req.body);
+        console.error('Erro no createWorkspaceType:', err, req.body);
         res.status(500).json({ message: 'Ocorreu um erro interno.' });
     }
 }
 
-async function getAllRoomTypes(req, res) {
+async function getAllWorkspaceTypes(req, res) {
     try {
 
-        const roles = await RoomType.findAll();
+        const roles = await WorkspaceType.findAll();
         res.status(200).json(roles);
     } catch (err) {
 
@@ -29,14 +29,14 @@ async function getAllRoomTypes(req, res) {
     }
 }
 
-async function getRoomTypeById(req, res) {
+async function getWorkspaceTypeById(req, res) {
     try {
 
         const { id } = req.params;
         if (!id) {
             res.json({ message: "Você não passou o id no paramentro" })
         }
-        const role = await RoomType.findOne({
+        const role = await WorkspaceType.findOne({
             where: { id: id }
         })
         res.status(200).json(role);
@@ -46,7 +46,7 @@ async function getRoomTypeById(req, res) {
 }
 
 
-async function updateRoomTypeById(req, res) {
+async function updateWorkspaceTypeById(req, res) {
     try {
 
 
@@ -55,17 +55,17 @@ async function updateRoomTypeById(req, res) {
             res.json({ message: "Você não passou o id no paramentro" })
         }
 
-        const roleUpdate = await RoomType.findByPk(id)
+        const roleUpdate = await WorkspaceType.findByPk(id)
         if (!roleUpdate) {
-            res.json({ message: 'RoomType não encontrada' })
+            res.json({ message: 'WorkspaceType não encontrada' })
 
         }
         const role = req.body;
 
-        await RoomType.update(role, {
+        await WorkspaceType.update(role, {
             where: { id: id }
         });
-        return res.status(200).json({ message: "RoomType atualizada" });
+        return res.status(200).json({ message: "WorkspaceType atualizada" });
 
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -73,18 +73,18 @@ async function updateRoomTypeById(req, res) {
 }
 
 
-async function deleteRoomTypeById(req, res) {
+async function deleteWorkspaceTypeById(req, res) {
     try {
         const id = req.params.id;
         if (!id) {
             res.json({ message: "Você não passou o id no paramentro" })
         }
-        const role = await RoomType.findByPk(id)
+        const role = await WorkspaceType.findByPk(id)
         if (role) {
             await role.destroy()
-            res.status(204).json({ message: 'RoomType excluída com sucesso' });
+            res.status(204).json({ message: 'WorkspaceType excluída com sucesso' });
         } else {
-            res.status(404).json({ message: 'RoomType não encontrada' });
+            res.status(404).json({ message: 'WorkspaceType não encontrada' });
         }
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -93,9 +93,9 @@ async function deleteRoomTypeById(req, res) {
 
 
 module.exports = {
-    createRoomType,
-    getAllRoomTypes,
-    getRoomTypeById,
-    updateRoomTypeById,
-    deleteRoomTypeById,
+    createWorkspaceType,
+    getAllWorkspaceTypes,
+    getWorkspaceTypeById,
+    updateWorkspaceTypeById,
+    deleteWorkspaceTypeById,
 }

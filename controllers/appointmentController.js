@@ -4,7 +4,7 @@ const { Appointment } = require('../models');
 async function createAppointment(req, res) {
     try {
         const userId = req.user.id;
-        const { title, dateStart, dateEnd, startingTime, endingTime, isPrivate, description } = req.body;
+        const { title, dateStart, dateEnd, startingTime, endingTime, isPrivate, description, workspaceId, appointmentStatusId } = req.body;
         const newAppointment = await Appointment.create({
             title,
             dateStart,
@@ -14,6 +14,8 @@ async function createAppointment(req, res) {
             description,
             isPrivate,
             userId,
+            workspaceId,
+            appointmentStatusId
         });
         res.status(201).json({ appointment: newAppointment });
     } catch (error) {

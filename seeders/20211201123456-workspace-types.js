@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const roomTypesData = [
+    const workspaceTypesData = [
       {
         typeName: 'Sala Reunião 1',
         description: 'Sala Reunião 1',
@@ -21,10 +21,10 @@ module.exports = {
       },
     ];
 
-    await queryInterface.bulkInsert('RoomTypes', roomTypesData, {});
+    await queryInterface.bulkInsert('WorkspaceTypes', workspaceTypesData, {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('RoomTypes', null, {});
+    await queryInterface.bulkDelete('WorkspaceTypes', null, {});
   },
 };

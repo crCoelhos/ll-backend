@@ -1,13 +1,12 @@
-// models/workspace.js
 'use strict';
 const { DataTypes, Model } = require('sequelize');
 
 module.exports = (sequelize) => {
   class Workspace extends Model {
     static associate(models) {
-      Workspace.belongsTo(models.RoomType,
+      Workspace.belongsTo(models.WorkspaceType,
         {
-          foreignKey: 'roomTypeId'
+          foreignKey: 'workspaceTypeId'
         });
     }
   }
@@ -27,10 +26,10 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: 0,
       },
-      roomTypeId: {
+      workspaceTypeId: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'RoomTypes',
+          model: 'WorkspaceTypes',
           key: 'id',
         },
       },

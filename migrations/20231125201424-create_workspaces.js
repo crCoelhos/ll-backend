@@ -22,10 +22,10 @@ module.exports = {
         allowNull: false,
         defaultValue: 0,
       },
-      roomTypeId: {
+      workspaceTypeId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'RoomTypes',
+          model: 'WorkspaceTypes',
           key: 'id',
         },
       },

@@ -46,6 +46,28 @@ module.exports = {
                 onDelete: 'CASCADE',
 
             },
+            workspaceId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'Workspaces',
+                    key: 'id',
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+
+            },
+            appointmentStatusId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'AppointmentStatuses',
+                    key: 'id',
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
