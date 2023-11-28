@@ -25,20 +25,12 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      dateStart: {
-        type: DataTypes.DATEONLY,
+      startDate: {
+        type: DataTypes.DATE,
         allowNull: false,
       },
-      dateEnd: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-      },
-      startingTime: {
-        type: DataTypes.TIME,
-        allowNull: false,
-      },
-      endingTime: {
-        type: DataTypes.TIME,
+      endDate: {
+        type: DataTypes.DATE,
         allowNull: false,
       },
       description: {

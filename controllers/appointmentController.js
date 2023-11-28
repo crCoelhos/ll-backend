@@ -1,28 +1,59 @@
-const { Appointment } = require('../models');
+const { Op } = require('sequelize');
 
+const { Appointment } = require('../models');
 
 async function createAppointment(req, res) {
     try {
         const userId = req.user.id;
-        const { title, dateStart, dateEnd, startingTime, endingTime, isPrivate, description, workspaceId, appointmentStatusId } = req.body;
+        const { title, startDate, endDate, isPrivate, description, workspaceId, appointmentStatusId } = req.body;
+
+        const conflictingAppointments = await Appointment.findAll({
+            where: {
+                workspaceId,
+                appointmentStatusId: '1',
+                [Op.or]: [
+                    {
+                        startDate: {
+                            [Op.between]: [startDate, endDate],
+                        },
+                    },
+                    {
+                        endDate: {
+                            [Op.between]: [startDate, endDate],
+                        },
+                    },
+                    {
+                        [Op.and]: [
+                            { startDate: { [Op.lte]: startDate } },
+                            { endDate: { [Op.gte]: endDate } },
+                        ],
+                    },
+                ],
+            },
+        });
+
+        if (conflictingAppointments.length > 0) {
+            return res.status(400).json({ error: 'Conflito de horário com outro agendamento.' });
+        }
+
         const newAppointment = await Appointment.create({
             title,
-            dateStart,
-            dateEnd,
-            startingTime,
-            endingTime,
+            startDate,
+            endDate,
             description,
             isPrivate,
             userId,
             workspaceId,
-            appointmentStatusId
+            appointmentStatusId,
         });
+
         res.status(201).json({ appointment: newAppointment });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao criar agendamento.' });
     }
 }
+
 
 async function getAppointmentById(req, res) {
     try {
@@ -60,6 +91,9 @@ async function getAllAppointments(req, res) {
         res.status(500).json({ error: 'Erro ao obter agendamentos.' });
     }
 }
+
+// getAllPrivateAppointments
+
 
 async function updateAppointment(req, res) {
     try {
