@@ -40,7 +40,7 @@ async function signin(req, res) {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(401).json({ error: '(auth 2)Usuário não encontrado.' });
+      return res.status(401).json({ error: 'Usuário não encontrado.' });
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
@@ -49,15 +49,17 @@ async function signin(req, res) {
       return res.status(401).json({ error: 'Senha incorreta.' });
     }
 
-    const token = jwt.sign({ userId: user.id }, config.jwtSecret, {
+    const { id, name, roleId, isActive } = user;
+    const token = jwt.sign({ userId: id }, config.jwtSecret, {
       expiresIn: '1h',
     });
 
-    res.status(200).json({ token });
+    res.status(200).json({ token, name, email, roleId, isActive });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erro ao fazer login.' });
   }
 }
+
 
 module.exports = { signup, signin };

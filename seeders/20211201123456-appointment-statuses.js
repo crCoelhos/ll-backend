@@ -5,6 +5,12 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const statuses = [
       {
+        name: 'Waiting',
+        description: 'The appointment is to be confirmed.',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
         name: 'Scheduled',
         description: 'The appointment is scheduled.',
         createdAt: new Date(),
