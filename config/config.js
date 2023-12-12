@@ -9,5 +9,9 @@ module.exports = {
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
     dialect: 'mysql',
+    dialectOptions: {
+      useUTC: false,
+    },
+    timezone: '-05:00',
   },
 };
