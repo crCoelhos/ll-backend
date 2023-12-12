@@ -53,7 +53,17 @@ async function createAppointment(req, res) {
             appointmentStatusId,
         });
 
-        res.status(201).json({ appointment: newAppointment });
+        const formattedStartDateResponse = moment(newAppointment.startDate).tz('America/Rio_Branco').format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+        const formattedEndDateResponse = moment(newAppointment.endDate).tz('America/Rio_Branco').format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+
+
+        res.status(201).json({
+            appointment: {
+                ...newAppointment.toJSON(),
+                startDate: formattedStartDateResponse,
+                endDate: formattedEndDateResponse,
+            }
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao criar agendamento.' });
