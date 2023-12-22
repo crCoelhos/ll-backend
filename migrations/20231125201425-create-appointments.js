@@ -53,13 +53,13 @@ module.exports = {
             },
             appointmentStatusId: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
                 references: {
                     model: 'AppointmentStatuses',
                     key: 'id',
                 },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
+                defaultValue: 0,
 
             },
             createdAt: {
