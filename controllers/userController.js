@@ -102,6 +102,7 @@ async function createUser(req, res) {
                 street: address.street,
                 city: address.city,
                 state: address.state,
+                number: address.number,
                 CEP: address.CEP,
                 userId: user.id
             }, { transaction: t });

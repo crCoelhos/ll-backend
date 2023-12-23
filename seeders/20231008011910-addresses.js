@@ -6,6 +6,7 @@ module.exports = {
       {
         state: 'YourState1',
         street: 'YourStreet1',
+        number: '1',
         city: 'YourCity1',
         CEP: 'YourCEP1',
         userId: 1,
@@ -15,6 +16,7 @@ module.exports = {
       {
         state: 'YourState2',
         street: 'YourStreet2',
+        number: '2',
         city: 'YourCity2',
         CEP: 'YourCEP2',
         userId: 2,
