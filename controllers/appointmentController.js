@@ -172,6 +172,58 @@ async function updateAppointment(req, res) {
     }
 }
 
+async function confirmAppointment(req, res) {
+    try {
+        const appointment = await Appointment.findByPk(req.params.id);
+
+        if (!appointment) {
+            return res.status(404).json({ error: 'Agendamento não encontrado.' });
+        }
+
+        await appointment.update({ appointmentStatusId: 2 });
+
+        res.status(200).json({ appointment });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro ao confirmar reserva.' });
+    }
+}
+
+
+async function cancelAppointment(req, res) {
+    try {
+        const appointment = await Appointment.findByPk(req.params.id);
+
+        if (!appointment) {
+            return res.status(404).json({ error: 'Reserva não encontrada.' });
+        }
+
+        await appointment.update({ appointmentStatusId: 4 });
+
+        res.status(200).json({ message: "Reserva cancelada com sucesso." });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro ao cancelar reserva.' });
+    }
+}
+
+
+
+async function postponeAppointment(req, res) {
+    try {
+        const { title, start, end, description, workspaceId, userId, appointmentStatusId, isPrivate } = req.body;
+        const appointment = await Appointment.findByPk(req.params.id);
+        if (!appointment) {
+            return res.status(404).json({ error: 'Agendamento não encontrado.' });
+        }
+        await appointment.update({ title, start, end, description, workspaceId, userId, appointmentStatusId, isPrivate });
+        res.status(200).json({ message: "Agendamento retornado para reserva com sucesso." });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro ao atualizar agendamento.' });
+    }
+}
+
 async function updateAppointmentStatus(req, res, newStatus) {
     try {
         const appointment = await Appointment.findByPk(req.params.id);
@@ -223,5 +275,8 @@ module.exports = {
     updateAppointmentStatus,
     getAppointmentById,
     getAllAppointmentsByWorkspaceId,
-    getAppointmentByWorkspaceIdAndDate
+    getAppointmentByWorkspaceIdAndDate,
+    confirmAppointment,
+    cancelAppointment,
+    postponeAppointment
 };

@@ -7,12 +7,14 @@ const expertiseRoutes = require('./expertiseRoutes');
 const addressRoutes = require('./addressRoutes');
 const authRoutes = require('./authRoutes')
 const appointmentRoutes = require('./appointmentRoutes')
+const appointmentStatusRoutes = require('./appointmentStatusRoutes')
 const workspaceRoutes = require('./workspaceRoutes')
 const workspaceTypeRoutes = require('./workspaceTypeRoutes')
 
 router.use('/v1', authRoutes, authRoutes)
 router.use('/v1', authRoutes, userRoutes);
 router.use('/v1', authRoutes, appointmentRoutes);
+router.use('/v1', authRoutes, appointmentStatusRoutes);
 router.use('/v1', authRoutes, roleRoutes);
 router.use('/v1', authRoutes, expertiseRoutes);
 router.use('/v1', authRoutes, addressRoutes);
