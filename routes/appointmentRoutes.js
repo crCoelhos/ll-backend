@@ -19,6 +19,7 @@ router.put('/appointment/:id', authMiddleware, appointmentController.updateAppoi
 router.put('/appointment-status/:id', authMiddleware, appointmentController.updateAppointmentStatus);
 router.put('/appointment-status', authMiddleware, appointmentController.updateAppointmentStatus);
 router.delete('/appointment/:id', authMiddleware, appointmentController.deleteAppointment);
+
 router.put('/cancel-appointment/:id', authMiddleware, appointmentController.cancelAppointment);
 router.put('/confirm-appointment/:id', authMiddleware, appointmentController.confirmAppointment);
 router.put('/postpone-appointment/:id', authMiddleware, appointmentController.postponeAppointment);

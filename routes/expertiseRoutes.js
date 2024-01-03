@@ -7,9 +7,9 @@ router.get('/expertise/teste', (req, res) => {
     res.status(200).json({ message: 'expertise teste' });
 });
 
+router.post('/expertise/create', expertiseController.createExpertise);
 router.get('/expertises/', expertiseController.getAllExpertises);
 router.get('/expertise/:id', expertiseController.getExpertiseById);
-router.post('/expertise/', expertiseController.createExpertise);
 router.put('/expertise/:id', expertiseController.updateExpertiseById);
 router.delete('/expertise/:id', expertiseController.deleteExpertiseById);
 

@@ -7,9 +7,9 @@ router.get('/role/teste', (req, res) => {
     res.status(200).json({ message: 'role teste' });
 });
 
+router.post('/role/create', roleController.createRole);
 router.get('/roles/', roleController.getAllRoles);
 router.get('/role/:id', roleController.getRoleById);
-router.post('/role/', roleController.createRole);
 router.put('/role/:id', roleController.updateRoleById);
 router.delete('/role/:id', roleController.deleteRoleById);
 
