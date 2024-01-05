@@ -101,8 +101,52 @@ async function getUserById(req, res) {
     }
 }
 
+async function getUserByRequest(req, res) {
+    try {
+        const userId = req.user.id;
+
+        const user = await User.findOne({
+            where: { id: userId },
+            attributes: {
+                exclude: ['roleId', 'password', 'id', 'passwordRecoveryToken', 'createdAt',],
+            }
+        });
+
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
+
 
 async function updateUserById(req, res) {
+    try {
+
+
+        const id = req.params.id;
+        if (!id) {
+            res.json({ message: "Você não passou o id no paramentro" })
+        }
+
+        const userUpdate = await User.findByPk(id)
+        if (!userUpdate) {
+            res.json({ message: 'Usuário não encontrado' })
+
+        }
+        const user = req.body;
+
+        await User.update(user, {
+            where: { id: id }
+        });
+        return res.status(200).json({ message: "Usuário atualizado" });
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
+async function updateUserByRequest(req, res) {
     try {
 
 
@@ -152,6 +196,7 @@ module.exports = {
     createUser,
     getAllUsers,
     getUserById,
+    getUserByRequest,
     updateUserById,
     deleteUserById,
 }
