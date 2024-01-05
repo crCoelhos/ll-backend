@@ -8,7 +8,7 @@ router.get('/user/teste', (req, res) => {
     res.status(200).json({ message: 'user teste' });
 });
 
-router.post('/user/create', authMiddleware, userController.createUser);
+router.post('/user/create', userController.createUser);
 router.get('/users/', authMiddleware, userController.getAllUsers);
 router.get('/user/:id', authMiddleware, userController.getUserById);
 router.get('/user/', authMiddleware, userController.getUserByRequest);

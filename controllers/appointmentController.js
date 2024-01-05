@@ -89,7 +89,8 @@ async function getAllPublicAppointments(req, res) {
         const appointments = await Appointment.findAll({
             where: {
                 isPrivate: 0,
-                appointmentStatusId: 1 || 2,
+                // appointmentStatusId: 1 || 2,
+                appointmentStatusId: 2,
             }
         });
         res.status(200).json({ appointments });

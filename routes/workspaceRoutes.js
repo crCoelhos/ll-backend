@@ -8,7 +8,8 @@ router.get('/workspace/teste', (req, res) => {
 });
 
 router.post('/workspace/create', workspaceController.createWorkspace);
-router.get('/workspaces/', workspaceController.getAllWorkspaces);
+router.get('/workspaces/', workspaceController.getAllActiveWorkspaces);
+router.get('/all-workspaces/', workspaceController.getAllWorkspaces);
 router.get('/workspace/:id', workspaceController.getWorkspaceById);
 router.put('/workspace/:id', workspaceController.updateWorkspaceById);
 router.delete('/workspace/:id', workspaceController.deleteWorkspaceById);

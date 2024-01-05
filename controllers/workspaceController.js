@@ -17,6 +17,18 @@ async function createWorkspace(req, res) {
   }
 }
 
+async function getAllActiveWorkspaces(req, res) {
+  try {
+    const workspaces = await Workspace.findAll({
+      where: {
+        isActive: 1,
+      },
+    });
+    res.status(200).json(workspaces);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
 async function getAllWorkspaces(req, res) {
   try {
     const workspaces = await Workspace.findAll();
@@ -83,6 +95,7 @@ async function deleteWorkspaceById(req, res) {
 
 module.exports = {
   createWorkspace,
+  getAllActiveWorkspaces,
   getAllWorkspaces,
   getWorkspaceById,
   updateWorkspaceById,
