@@ -22,6 +22,11 @@ module.exports = {
         allowNull: false,
         defaultValue: 0,
       },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
       workspaceTypeId: {
         type: Sequelize.INTEGER,
         references: {

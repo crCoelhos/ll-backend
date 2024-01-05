@@ -26,6 +26,11 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: 0,
       },
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+      },
       workspaceTypeId: {
         type: DataTypes.INTEGER,
         references: {

@@ -2,14 +2,14 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const workspaceTypesData = [
       {
-        typeName: 'Sala Reunião 1',
-        description: 'Sala Reunião 1',
+        typeName: 'Sala de Reunião 1',
+        description: 'Sala reunião grande',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        typeName: 'Sala Reunião 2',
-        description: 'Sala Reunião 2',
+        typeName: 'Sala Compartilhada',
+        description: 'Sala compartilhada de tamanho médio',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
