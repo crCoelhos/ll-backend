@@ -57,3 +57,6 @@ docker compose up -d # Rodando em background
 ```
 para iniciar a aplicação.
 O docker baixaram a images do MySQL e Node.js (Ser sua máquina nunca tever antes).
+
+docker-compose up --build
+re-executa o arquivo

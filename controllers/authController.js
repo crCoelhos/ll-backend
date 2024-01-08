@@ -25,6 +25,8 @@ async function signup(req, res) {
     };
     await Address.create(addressData);
 
+    // TODO: need verification with mail here.
+
     res.status(201).json({ user });
   } catch (error) {
     console.error(error);
@@ -49,6 +51,8 @@ async function signin(req, res) {
       return res.status(401).json({ error: 'Senha incorreta.' });
     }
 
+    // TODO: Discutir ser coloco tentativas de login, ai deixar a pessoa sem tentar entrar
+
     const { id, name, roleId, isActive } = user;
     const token = jwt.sign({ userId: id }, config.jwtSecret, {
       expiresIn: '1h',
@@ -61,5 +65,54 @@ async function signin(req, res) {
   }
 }
 
+async function requestPasswordReset(req, res) {
+  try {
+    const { email } = req.body;
 
-module.exports = { signup, signin };
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return res.status(404).json({ error: 'Usuário não encontrado.' });
+    }
+
+    const resetToken = jwt.sign({ userId: user.id }, config.jwtSecret, { expiresIn: '1h' });
+
+    await user.update({ passwordRecoveryToken: resetToken });
+
+    // TODO: send mail with token for user
+
+    res.status(200).json({ message: 'Instruções de recuperação de senha enviadas para o e-mail fornecido.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao processar a solicitação de recuperação de senha.' });
+  }
+}
+
+async function resetPassword(req, res) {
+  try {
+    const { token, newPassword } = req.body;
+
+    const decodedToken = jwt.verify(token, config.jwtSecret);
+
+    const user = await User.findByPk(decodedToken.userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'Usuário não encontrado.' });
+    }
+
+    if (user.passwordRecoveryToken !== token) {
+      return res.status(401).json({ error: 'Token de recuperação de senha inválido.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await user.update({ password: hashedPassword, passwordRecoveryToken: null });
+
+    res.status(200).json({ message: 'Senha redefinida com sucesso.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao redefinir a senha.' });
+  }
+}
+
+module.exports = { signup, signin, requestPasswordReset, resetPassword };
