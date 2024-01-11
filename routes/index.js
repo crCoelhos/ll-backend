@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const userRoutes = require('./userRoutes');
+const lawyerRoutes = require('./lawyerRoutes');
 const roleRoutes = require('./roleRoutes');
 const expertiseRoutes = require('./expertiseRoutes');
 const addressRoutes = require('./addressRoutes');
@@ -14,6 +15,7 @@ const accountRoutes = require('./accountRoutes');
 
 router.use('/v1', authRoutes, authRoutes);
 router.use('/v1', authRoutes, userRoutes);
+router.use('/v1', authRoutes, lawyerRoutes);
 router.use('/v1', authRoutes, appointmentRoutes);
 router.use('/v1', authRoutes, appointmentStatusRoutes);
 router.use('/v1', authRoutes, roleRoutes);

@@ -14,6 +14,18 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      secNumber: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      inscriptionType: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      UF: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       riteDate: {
         type: Sequelize.DATE,
         allowNull: false,

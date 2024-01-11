@@ -18,6 +18,7 @@ async function createAddress(req, res) {
     } catch (err) {
         console.error('Erro no createAddress:', err, req.body);
         res.status(500).json({ message: 'Ocorreu um erro interno.' });
+        throw err;
     }
 }
 
@@ -27,8 +28,8 @@ async function getAllAddresss(req, res) {
         const addresss = await Address.findAll();
         res.status(200).json(addresss);
     } catch (err) {
-
         res.status(500).json({ message: err.message });
+        throw err;
     }
 }
 
@@ -45,6 +46,7 @@ async function getAddressById(req, res) {
         res.status(200).json(address);
     } catch (err) {
         res.status(500).json({ message: err.message });
+        throw err;
     }
 }
 
@@ -73,6 +75,7 @@ async function updateAddressById(req, res) {
 
     } catch (err) {
         res.status(500).json({ message: err.message });
+        throw err;
     }
 }
 
@@ -94,6 +97,7 @@ async function deleteAddressById(req, res) {
         }
     } catch (err) {
         res.status(500).json({ message: err.message });
+        throw err;
     }
 }
 

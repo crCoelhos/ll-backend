@@ -1,67 +1,121 @@
 const bcrypt = require('bcrypt');
 const db = require('../models');
 const User = db.User;
+const Lawyer = db.Lawyer;
 const Address = db.Address;
 const UserAddress = db.UserAddress;
 
+// async function createUser(req, res) {
+//     const t = await db.sequelize.transaction();
+//     try {
+//         const { name, email, CPF, birthdate, password, OAB, riteDate, roleId, address } = req.body;
+
+//         let user = await User.findOne({
+//             where: { CPF: CPF }
+//         });
+
+//         if (!user) {
+//             const hashedPassword = await bcrypt.hash(password, 10);
+//             user = await User.create({
+//                 name: name,
+//                 email: email,
+//                 CPF: CPF,
+//                 birthdate: birthdate,
+//                 password: hashedPassword,
+//                 roleId: roleId
+//             }, { transaction: t });
+
+//             console.log('Usuário criado com sucesso.');
+
+//             //  endereço depois do user criaod
+//             const createdAddress = await Address.create({
+//                 street: address.street,
+//                 city: address.city,
+//                 state: address.state,
+//                 number: address.number,
+//                 CEP: address.CEP,
+//                 userId: user.id
+//             }, { transaction: t });
+
+//             console.log('Endereço criado com sucesso.');
+
+
+//         } else {
+//             console.log('Usuário já existe');
+//             res.status(400).json({ message: 'O usuário já existe.' });
+//             await t.rollback();
+//             return;
+//         }
+
+//         if (OAB && riteDate && UF && inscriptionType && secNumber) {
+//             console.log('CRIANDO LAWYER')
+//             const lawyer = await Lawyer.create({
+//                 OAB: OAB,
+//                 riteDate: riteDate,
+//                 userId: user.id
+//             }, { transaction: t });
+//             res.status(201).json(lawyer);
+//         } else {
+//             res.status(201).json(user);
+//         }
+
+//         await t.commit();
+//     } catch (err) {
+//         console.error('Erro no createUser:', err, req.body);
+//         await t.rollback();
+//         res.status(500).json({ message: 'Ocorreu um erro interno.' });
+//     }
+// }
+
 async function createUser(req, res) {
-    const t = await db.sequelize.transaction();
+    const { name, email, CPF, birthdate, password, OAB, riteDate, roleId, address, secNumber, inscriptionType, UF } = req.body;
+
     try {
-        const { name, email, CPF, birthdate, password, OAB, riteDate, roleId, address } = req.body;
-
-        let user = await User.findOne({
-            where: { CPF: CPF }
-        });
-
-        if (!user) {
-            const hashedPassword = await bcrypt.hash(password, 10);
-            user = await User.create({
-                name: name,
-                email: email,
-                CPF: CPF,
-                birthdate: birthdate,
-                password: hashedPassword,
-                roleId: roleId
-            }, { transaction: t });
-
-            console.log('Usuário criado com sucesso.');
-
-            //  endereço depois do user criaod
-            const createdAddress = await Address.create({
-                street: address.street,
-                city: address.city,
-                state: address.state,
-                number: address.number,
-                CEP: address.CEP,
-                userId: user.id
-            }, { transaction: t });
-
-            console.log('Endereço criado com sucesso.');
-
-
-        } else {
-            console.log('Usuário já existe');
-            res.status(400).json({ message: 'O usuário já existe.' });
-            await t.rollback();
-            return;
+        if (!name || !email || !CPF || !birthdate || !password) {
+            return res.status(400).json({ message: 'Campos obrigatórios ausentes.' });
         }
 
-        if (OAB && riteDate) {
-            console.log('CRIANDO LAWYER')
+        const existingUser = await User.findOne({ where: { CPF: CPF } });
+        if (existingUser) {
+            return res.status(400).json({ message: 'O usuário já existe.' });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await User.create({
+            name: name,
+            email: email,
+            CPF: CPF,
+            birthdate: birthdate,
+            password: hashedPassword,
+            roleId: roleId
+        });
+
+
+        const createdAddress = await Address.create({
+            street: address.street,
+            city: address.city,
+            state: address.state,
+            number: address.number,
+            CEP: address.CEP,
+            userId: user.id
+        });
+
+        if (OAB && riteDate && UF && inscriptionType && secNumber) {
             const lawyer = await Lawyer.create({
                 OAB: OAB,
                 riteDate: riteDate,
-                userId: user.id
-            }, { transaction: t });
-            res.status(201).json(lawyer);
-        } else {
-            res.status(201).json(user);
+                userId: user.id,
+                secNumber: secNumber,
+                inscriptionType: inscriptionType,
+                UF: UF
+            });
+
+            return res.status(201).json(lawyer);
         }
 
-        await t.commit();
+        return res.status(201).json(user);
     } catch (err) {
         console.error('Erro no createUser:', err, req.body);
-        await t.rollback();
         res.status(500).json({ message: 'Ocorreu um erro interno.' });
     }
 }

@@ -7,6 +7,10 @@ module.exports = {
         OAB: '123456',
         riteDate: '2022-01-01',
         userId: 3,
+        secNumber: '123456',
+        inscriptionType: '123456',
+        UF: 'AC',
+        
       },
     ];
 

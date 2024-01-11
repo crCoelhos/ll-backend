@@ -27,6 +27,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: false,
       },
+      secNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      inscriptionType: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      UF: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       sequelize,
