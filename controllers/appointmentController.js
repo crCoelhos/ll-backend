@@ -73,7 +73,10 @@ async function createAppointment(req, res) {
 
 async function getAppointmentById(req, res) {
     try {
-        const appointment = await Appointment.findByPk(req.params.id);
+        const id = req.params.id;
+
+        const appointment = await Appointment.findByPk(id);
+
         if (!appointment) {
             return res.status(400).json({ error: 'ID não fornecido.' });
         }
@@ -81,6 +84,7 @@ async function getAppointmentById(req, res) {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao obter agendamento.' });
+        throw error;
     }
 }
 

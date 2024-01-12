@@ -60,9 +60,34 @@ async function createUser(req, res) {
     }
 }
 
+async function getLawyerById(req, res) {
+    try {
+        const id = req.params.id;
+
+        const lawyer = await Lawyer.findByPk(id, {
+            include: [{
+                model: User,
+                as: 'user',
+                attributes: {
+                    exclude: ['password', 'passwordRecoveryToken']
+                },
+            }],
+        });
+
+        res.status(200).json(lawyer);
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+        console.error('Erro ao obter advogado por ID', err);
+        throw err;
+    }
+}
+
+
+
 async function getLawyerByUserId(req, res) {
     try {
-        const { id } = req.params;
+        const id = req.params.id;
 
         const lawyer = await Lawyer.findOne({
             where: { userId: id },
@@ -74,8 +99,9 @@ async function getLawyerByUserId(req, res) {
                 },
             }],
         });
+        res.status(200).json(lawyer);
 
-        return lawyer;
+
     } catch (err) {
         res.status(500).json({ message: err.message });
         console.error('Erro ao obter advogado por ID de usuário:', err);
@@ -106,5 +132,6 @@ async function getAllLawyers(req, res) {
 module.exports = {
     createUser,
     getAllLawyers,
+    getLawyerById,
     getLawyerByUserId
 };

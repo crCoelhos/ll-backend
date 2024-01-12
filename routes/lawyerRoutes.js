@@ -9,7 +9,8 @@ router.get('/lawyer/teste', (req, res) => {
 });
 
 router.get('/lawyers/', authMiddleware, lawyerController.getAllLawyers);
-router.get('/lawyer/:id', authMiddleware, lawyerController.getLawyerByUserId);
+router.get('/lawyer-user/:id', authMiddleware, lawyerController.getLawyerByUserId);
+router.get('/lawyer/:id', authMiddleware, lawyerController.getLawyerById);
 router.post('/lawyer/create', lawyerController.createUser);
 
 module.exports = router;

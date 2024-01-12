@@ -32,7 +32,8 @@ async function getAllRoles(req, res) {
 async function getRoleById(req, res) {
     try {
 
-        const { id } = req.params;
+        const id = req.params.id;
+
         if (!id) {
             res.json({ message: "Você não passou o id no paramentro" })
         }

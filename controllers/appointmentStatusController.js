@@ -30,16 +30,19 @@ async function getAllAppointmentStatuses(req, res) {
 }
 
 async function getAppointmentStatusById(req, res) {
+
     try {
 
-        const { id } = req.params;
+        const id = req.params.id;
+
         if (!id) {
-            res.json({ message: "Você não passou o id no paramentro" })
+            res.json({ message: "Você não passou o id no paramentro", id })
         }
-        const role = await AppointmentStatus.findOne({
-            where: { id: id }
-        })
-        res.status(200).json(role);
+
+
+        const appointmentStatus = await AppointmentStatus.findByPk(id)
+        res.status(200).json(appointmentStatus);
+
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
