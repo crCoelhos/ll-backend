@@ -9,6 +9,7 @@ router.get('/lawyer/teste', (req, res) => {
 });
 
 router.get('/lawyers/', authMiddleware, lawyerController.getAllLawyers);
+router.get('/lawyer/:id', authMiddleware, lawyerController.getLawyerByUserId);
 router.post('/lawyer/create', lawyerController.createUser);
 
 module.exports = router;

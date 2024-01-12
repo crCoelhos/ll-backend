@@ -60,10 +60,12 @@ async function createUser(req, res) {
     }
 }
 
-async function getLawyerByUserId(userId) {
+async function getLawyerByUserId(req, res) {
     try {
+        const { id } = req.params;
+
         const lawyer = await Lawyer.findOne({
-            where: { userId: userId },
+            where: { userId: id },
             include: [{
                 model: User,
                 as: 'user',
@@ -83,6 +85,7 @@ async function getLawyerByUserId(userId) {
 
 async function getAllLawyers(req, res) {
     try {
+
         const lawyers = await Lawyer.findAll({
             include: [{
                 model: User,
@@ -103,4 +106,5 @@ async function getAllLawyers(req, res) {
 module.exports = {
     createUser,
     getAllLawyers,
+    getLawyerByUserId
 };
