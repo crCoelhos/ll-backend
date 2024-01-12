@@ -32,7 +32,7 @@ module.exports = {
         birthdate: '1992-01-01',
         password: await bcrypt.hash('senha123', 10),
         isActive: true,
-        roleId: 2,
+        roleId: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

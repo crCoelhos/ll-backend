@@ -68,7 +68,7 @@ const UserAddress = db.UserAddress;
 // }
 
 async function createUser(req, res) {
-    const { name, email, CPF, birthdate, password, OAB, riteDate, roleId, address, secNumber, inscriptionType, UF } = req.body;
+    const { name, email, CPF, birthdate, password, OAB, riteDate, address, secNumber, inscriptionType, UF } = req.body;
 
     try {
         if (!name || !email || !CPF || !birthdate || !password) {
@@ -87,7 +87,7 @@ async function createUser(req, res) {
             CPF: CPF,
             birthdate: birthdate,
             password: hashedPassword,
-            roleId: roleId
+            roleId: 5
         });
 
 
