@@ -22,14 +22,14 @@ async function authMiddleware(req, res, next) {
             email: user.email,
         };
 
-        req.userId = user.id;      
+        req.userId = user.id;
 
         next();
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
             return res.status(401).json({ error: 'Sua sessão expirou. Faça login novamente.' });
         }
-        res.status(401).json({ error, message: 'Acesso não autorizado. Faça login para continuaraaa.' });
+        res.status(401).json({ error, message: 'Acesso não autorizado. Faça login para continuar.' });
     }
 }
 

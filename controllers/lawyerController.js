@@ -3,6 +3,8 @@ const db = require('../models');
 const User = db.User;
 const Lawyer = db.Lawyer;
 const Address = db.Address;
+const Expertise = db.Expertise
+const LawyerExpertises = db.LawyerExpertises;
 const UserAddress = db.UserAddress;
 
 async function createUser(req, res) {
@@ -65,13 +67,24 @@ async function getLawyerById(req, res) {
         const id = req.params.id;
 
         const lawyer = await Lawyer.findByPk(id, {
-            include: [{
-                model: User,
-                as: 'user',
-                attributes: {
-                    exclude: ['password', 'passwordRecoveryToken']
+            include: [
+                {
+                    model: User,
+                    as: 'user',
+                    attributes: {
+                        exclude: ['password', 'passwordRecoveryToken']
+                    },
                 },
-            }],
+                {
+                    model: Expertise,
+                    as: 'expertises',
+                    through: {
+                        model: LawyerExpertises,
+                        attributes: []
+                    },
+                    attributes: ['id', 'name']
+                }
+            ],
         });
 
         res.status(200).json(lawyer);
@@ -85,19 +98,31 @@ async function getLawyerById(req, res) {
 
 
 
+
 async function getLawyerByUserId(req, res) {
     try {
         const id = req.params.id;
 
         const lawyer = await Lawyer.findOne({
             where: { userId: id },
-            include: [{
-                model: User,
-                as: 'user',
-                attributes: {
-                    exclude: ['password', 'passwordRecoveryToken']
+            include: [
+                {
+                    model: User,
+                    as: 'user',
+                    attributes: {
+                        exclude: ['password', 'passwordRecoveryToken']
+                    },
                 },
-            }],
+                {
+                    model: Expertise,
+                    as: 'expertises',
+                    through: {
+                        model: LawyerExpertises,
+                        attributes: []
+                    },
+                    attributes: ['id', 'name']
+                }
+            ],
         });
         res.status(200).json(lawyer);
 
@@ -111,15 +136,25 @@ async function getLawyerByUserId(req, res) {
 
 async function getAllLawyers(req, res) {
     try {
-
         const lawyers = await Lawyer.findAll({
-            include: [{
-                model: User,
-                as: 'user',
-                attributes: {
-                    exclude: ['password', 'passwordRecoveryToken', 'createdAt', 'updatedAt']
+            include: [
+                {
+                    model: User,
+                    as: 'user',
+                    attributes: {
+                        exclude: ['password', 'passwordRecoveryToken', 'createdAt', 'updatedAt']
+                    },
                 },
-            }],
+                {
+                    model: Expertise,
+                    as: 'expertises',
+                    through: {
+                        model: LawyerExpertises,
+                        attributes: []
+                    },
+                    attributes: ['id', 'name']
+                }
+            ],
         });
 
         res.status(200).json(lawyers);
@@ -129,9 +164,82 @@ async function getAllLawyers(req, res) {
     }
 }
 
+
+async function getAllLawyersByExpertise(req, res) {
+    try {
+        const id = req.params.id;
+
+        const lawyers = await Lawyer.findAll({
+            include: [
+                {
+                    model: User,
+                    as: 'user',
+                    attributes: {
+                        exclude: ['password', 'passwordRecoveryToken', 'createdAt', 'updatedAt']
+                    },
+                },
+                {
+                    model: Expertise,
+                    as: 'expertises',
+                    through: {
+                        model: LawyerExpertises,
+                        attributes: []
+                    },
+                    where: { id: id },
+                    attributes: []
+                }
+            ],
+        });
+
+        res.status(200).json(lawyers);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+        throw err;
+    }
+}
+
+
+
+async function getAllLawyersByState(req, res) {
+    const UF = req.params.UF;
+
+    try {
+
+        const lawyers = await Lawyer.findAll({
+            where: [{ UF: UF }],
+            include: [
+                {
+                    model: User,
+                    as: 'user',
+                    attributes: {
+                        exclude: ['password', 'passwordRecoveryToken']
+                    },
+                },
+                {
+                    model: Expertise,
+                    as: 'expertises',
+                    through: {
+                        model: LawyerExpertises,
+                        attributes: []
+                    },
+                    attributes: ['id', 'name']
+                }
+            ],
+        });
+
+        res.status(200).json(lawyers);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+        throw err;
+    }
+}
+
+
 module.exports = {
     createUser,
     getAllLawyers,
     getLawyerById,
-    getLawyerByUserId
+    getLawyerByUserId,
+    getAllLawyersByState,
+    getAllLawyersByExpertise
 };
