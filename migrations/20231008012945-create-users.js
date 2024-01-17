@@ -18,6 +18,11 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      phoneNumber: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
       CPF: {
         type: Sequelize.STRING,
         allowNull: false,
