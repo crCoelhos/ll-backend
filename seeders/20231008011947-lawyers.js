@@ -12,7 +12,7 @@ module.exports = {
         UF: 'AC',
         graduateDegree: 'Mestre',
         description: 'Advogado especialista em direito do consumidor',
-        image: 'https://i.imgur.com/3hBbZ2Y.png',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSYwRES33lEp2J0iTxKzAa_5sIf_oybIwVrDIF9fr-J6SrpVAnNFLnQGOMueqckpO2bsk&usqp=CAU',
 
       },
       {
@@ -35,7 +35,7 @@ module.exports = {
         UF: 'AL',
         graduateDegree: 'Especialista',
         description: 'Advogado especialista em direito civil',
-        image: 'https://i.imgur.com/3hBbZ2Y.png',
+        image: 'https://images.jota.info/wp-content/uploads/2022/05/ministro-alexandre-de-moraes.jpg',
       },
       {
         OAB: '345678',
@@ -46,7 +46,7 @@ module.exports = {
         UF: 'AL',
         graduateDegree: 'Bacharel',
         description: 'Advogado atuante em direito penal',
-        image: 'https://i.imgur.com/3hBbZ2Y.png',
+        image: 'content/uploads/2016/09/11230237/carmem-lucia.jpg',
       },
       {
         OAB: '111111',
