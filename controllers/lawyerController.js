@@ -144,6 +144,7 @@ async function getAllLawyers(req, res) {
                     attributes: {
                         exclude: ['password', 'passwordRecoveryToken', 'createdAt', 'updatedAt']
                     },
+                    where: { roleId: 3 }
                 },
                 {
                     model: Expertise,
