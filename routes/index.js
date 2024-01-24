@@ -13,6 +13,7 @@ const workspaceRoutes = require('./workspaceRoutes');
 const searchRoutes = require('./searchRoutes');
 const workspaceTypeRoutes = require('./workspaceTypeRoutes');
 const accountRoutes = require('./accountRoutes');
+const comunicationRoutes = require('./comunicationRoutes');
 
 router.use('/v1', authRoutes, authRoutes);
 router.use('/v1', authRoutes, userRoutes);
@@ -25,6 +26,8 @@ router.use('/v1', authRoutes, addressRoutes);
 router.use('/v1', authRoutes, workspaceTypeRoutes);
 router.use('/v1', authRoutes, workspaceRoutes);
 router.use('/v1', authRoutes, searchRoutes);
+router.use('/v1', comunicationRoutes);
+// router.use('/v1', authRoutes, comunicationRoutes);
 router.use('/v1', accountRoutes);
 
 module.exports = router;
