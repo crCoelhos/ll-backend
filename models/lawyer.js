@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'lawyerId',
         as: 'expertises',
       });
+
+      this.hasMany(models.ProcessNumber, {
+        foreignKey: 'lawyerId',
+        as: 'processNumbers',
+      });
+      
     }
   }
 
