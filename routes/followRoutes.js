@@ -12,7 +12,7 @@ router.post('/follow/:id', authMiddleware, followController.followUser);
 router.post('/follow-lawyer/:id', authMiddleware, followController.followLawyer);
 router.delete('/unfollow-lawyer/:id', authMiddleware, followController.unfollowLawyer);
 router.delete('/unfollow/:id', authMiddleware, followController.unfollowUser);
-router.get('/my-followers/', authMiddleware, followController.myFollowers);
+router.get('/followers/:id', authMiddleware, followController.userFollowers);
 router.get('/followed-by/:id', followController.followedBy);
 router.get('/my-follows/', authMiddleware, followController.iAmFollowing);
 

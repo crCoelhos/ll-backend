@@ -201,8 +201,7 @@ const iAmFollowing = async (req, res) => {
     }
 };
 
-
-const myFollowers = async (req, res) => {
+const userFollowers = async (req, res) => {
     try {
         const userId = req.params.id;
 
@@ -214,23 +213,21 @@ const myFollowers = async (req, res) => {
 
         const followers = await Follower.findAll({
             where: { followingId: userId },
-            include: [{ model: User, as: 'follower' }],
+            raw: true,
         });
 
-        const users = followers.map((follower) => follower.follower);
 
-        res.status(200).json(users);
+        res.status(200).json(followers);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro interno do servidor' });
     }
 };
 
-
 module.exports = {
     followUser,
     unfollowUser,
-    myFollowers,
+    userFollowers,
     followedBy,
     iAmFollowing,
 
