@@ -217,6 +217,67 @@ const userFollowers = async (req, res) => {
         });
 
 
+        if (followers.length === 0) {
+            return res.status(200).json({ message: 'O usuário não possui seguidores' });
+        }
+
+        res.status(200).json(followers);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+};
+
+const myFollowers = async (req, res) => {
+    try {
+
+
+        const userId = req.user.id;
+
+        const user = await User.findByPk(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: 'Usuário não encontrado' });
+        }
+
+        const followers = await Follower.findAll({
+            where: { followingId: userId },
+            raw: true,
+        });
+
+        if (followers.length === 0) {
+            return res.status(200).json({ message: 'Você não possui seguidores' });
+        }
+
+
+        res.status(200).json(followers);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+};
+
+const lawyerFollowers = async (req, res) => {
+    try {
+        const lawyerId = req.params.id;
+
+        // Verifica se o advogado existe
+        const lawyer = await Lawyer.findByPk(lawyerId);
+
+        if (!lawyer || !lawyer.userId) {
+            return res.status(404).json({ error: 'Advogado não encontrado' });
+        }
+
+        // Obtém os seguidores do advogado
+        const followers = await Follower.findAll({
+            where: { followingId: lawyer.userId },
+            raw: true,
+        });
+
+        if (followers.length === 0) {
+            return res.status(200).json({ message: 'O advogado não possui seguidores' });
+        }
+
         res.status(200).json(followers);
     } catch (error) {
         console.error(error);
@@ -230,7 +291,9 @@ module.exports = {
     userFollowers,
     followedBy,
     iAmFollowing,
+    myFollowers,
 
     followLawyer,
     unfollowLawyer,
+    lawyerFollowers
 };
