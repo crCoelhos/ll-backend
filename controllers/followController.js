@@ -1,4 +1,4 @@
-const { User, Follower } = require('../models');
+const { User, Follower, Lawyer } = require('../models');
 
 const followUser = async (req, res) => {
     try {
@@ -41,6 +41,81 @@ const followUser = async (req, res) => {
         });
 
         res.status(201).json(newFollower);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+};
+
+
+const followLawyer = async (req, res) => {
+    try {
+        const followerId = req.user.id;
+        const followingId = req.params.id;
+
+        const lawyer = await Lawyer.findByPk(followingId);
+
+        if (!lawyer || !lawyer.userId) {
+            return res.status(404).json({ error: 'Advogado não encontrado' });
+        }
+
+        if (Number(followerId) === Number(lawyer.userId)) {
+            return res.status(400).json({ error: 'Você não pode seguir a si mesmo' });
+        }
+
+        const existingFollower = await Follower.findOne({
+            where: {
+                followerId,
+                followingId: lawyer.userId,
+            },
+        });
+
+        if (existingFollower) {
+            return res.status(400).json({ error: 'Você já está seguindo este usuário' });
+        }
+
+        const newFollower = await Follower.create({
+            followerId,
+            followingId: lawyer.userId,
+        });
+
+        res.status(201).json(newFollower);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+};
+
+const unfollowLawyer = async (req, res) => {
+    try {
+        const followerId = req.user.id;
+        const followingId = req.params.id;
+
+        const lawyer = await Lawyer.findByPk(followingId);
+
+        if (!lawyer || !lawyer.userId) {
+            return res.status(404).json({ error: 'Advogado não encontrado' });
+        }
+
+        const existingFollower = await Follower.findOne({
+            where: {
+                followerId,
+                followingId: lawyer.userId,
+            },
+        });
+
+        if (existingFollower) {
+
+            await Follower.destroy({
+                where: {
+                    followerId,
+                    followingId,
+                },
+            });
+        }
+
+
+        res.status(200).json({ message: 'Usuário deixou de seguir com sucesso' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro interno do servidor' });
@@ -101,9 +176,10 @@ const followedBy = async (req, res) => {
 };
 
 const iAmFollowing = async (req, res) => {
+
     try {
+
         const userId = req.user.id;
-        console.log("USUÁRIO ID: ", userId)
 
         const user = await User.findByPk(userId);
 
@@ -111,12 +187,12 @@ const iAmFollowing = async (req, res) => {
             return res.status(404).json({ error: 'Usuário não encontrado' });
         }
 
-        const following = await Follower.findAll({
-            where: { followingId: userId },
+        const followedUsers = await Follower.findAll({
+            where: { followerId: userId },
             include: [{ model: User, as: 'following' }],
         });
 
-        const users = following.map((followed) => followed.following);
+        const users = followedUsers.map((followedUser) => followedUser.following);
 
         res.status(200).json(users);
     } catch (error) {
@@ -156,5 +232,8 @@ module.exports = {
     unfollowUser,
     myFollowers,
     followedBy,
-    iAmFollowing
+    iAmFollowing,
+
+    followLawyer,
+    unfollowLawyer,
 };
