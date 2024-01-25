@@ -6,15 +6,24 @@ module.exports = {
       {
         title: 'Notificação 1',
         message: 'Esta é a primeira notificação',
-        isRead: false,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         title: 'Notificação 2',
         message: 'Esta é a segunda notificação',
-        isRead: false,
-        userId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        title: 'Notificação Global 1',
+        message: 'Esta é a notificação global 1',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        title: 'Notificação Global 2',
+        message: 'Esta é a notificação global 2',
         createdAt: new Date(),
         updatedAt: new Date(),
       },

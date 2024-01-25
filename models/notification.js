@@ -1,14 +1,11 @@
-'use strict';
-
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
     class Notification extends Model {
-
         static associate(models) {
-            Notification.belongsTo(models.User, {
-                foreignKey: 'userId',
-                as: 'user',
+            Notification.hasMany(models.UserNotification, {
+                foreignKey: 'notificationId',
+                as: 'userNotifications',
             });
         }
     }
@@ -26,16 +23,11 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false,
             },
-            userId: {
-                type: DataTypes.INTEGER,
-                allowNull: true,
-            },
         },
         {
             sequelize,
             modelName: 'Notification',
-            tableName: 'Notifications'
-
+            tableName: 'Notifications',
         }
     );
     return Notification;

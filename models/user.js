@@ -16,10 +16,18 @@ module.exports = (sequelize, DataTypes) => {
         as: 'addresses',
       });
 
-      User.hasMany(models.Notification, {
+      this.belongsToMany(models.Notification, {
+        through: models.UserNotification,
         foreignKey: 'userId',
         as: 'notifications',
       });
+
+      this.hasMany(models.Follower, {
+        foreignKey: 'followingId',
+        as: 'followers',
+      });
+
+
     }
 
 

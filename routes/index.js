@@ -16,6 +16,7 @@ const accountRoutes = require('./accountRoutes');
 const comunicationRoutes = require('./comunicationRoutes');
 const processRoutes = require('./processRoutes');
 const notificationRoutes = require('./notificationRoutes');
+const followRoutes = require('./followRoutes');
 
 router.use('/v1', authRoutes, authRoutes);
 router.use('/v1', authRoutes, userRoutes);
@@ -30,6 +31,7 @@ router.use('/v1', authRoutes, workspaceRoutes);
 router.use('/v1', authRoutes, searchRoutes);
 router.use('/v1', authRoutes, processRoutes);
 router.use('/v1', authRoutes, notificationRoutes);
+router.use('/v1', authRoutes, followRoutes);
 router.use('/v1', comunicationRoutes);
 // router.use('/v1', authRoutes, comunicationRoutes);
 router.use('/v1', accountRoutes);
