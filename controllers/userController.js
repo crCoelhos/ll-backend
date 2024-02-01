@@ -143,13 +143,6 @@ async function getUserByRequest(req, res) {
     }
 }
 
-
-
-
-
-
-
-
 async function updateUserById(req, res) {
     try {
 

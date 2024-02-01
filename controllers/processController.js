@@ -14,6 +14,13 @@ async function insertProcess(req, res) {
             where: { userId: userId },
         });
 
+        const existingProcessNumber = await ProcessNumber.findOne({
+            where: {
+                lawyerId: lawyer.id,
+                processNumber: processNumber
+            },
+        })
+
         if (!lawyer) {
             return res.status(404).json({ message: 'Advogado não encontrado.' });
         }
@@ -22,7 +29,9 @@ async function insertProcess(req, res) {
             return res.status(400).json({ message: 'Campo obrigatório ausente.' });
         }
 
-        // Crie o processo associado ao advogado
+        if (existingProcessNumber) {
+            return res.status(400).json({ message: 'Número de processo já cadastrado.' });
+        }
         const createdProcess = await ProcessNumber.create({
             processNumber: processNumber,
             lawyerId: lawyer.id,

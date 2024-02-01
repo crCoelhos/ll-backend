@@ -43,12 +43,6 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      {
-        lawyerId: 6,
-        expertiseId: 6,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
     ];
 
     await queryInterface.bulkInsert('LawyerExpertises', lawyerExpertiseData, {});
