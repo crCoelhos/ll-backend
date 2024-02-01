@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
         as: 'followers',
       });
 
+      this.hasOne(models.Lawyer, {
+        foreignKey: 'userId',
+        as: 'lawyer',
+      });
 
     }
 

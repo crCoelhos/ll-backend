@@ -26,16 +26,6 @@ module.exports = {
         description: 'Advogado especialista em direito do trabalhador',
         image: 'https://i.imgur.com/3hBbZ2Y.png',
 
-      }, {
-        OAB: '789012',
-        riteDate: '2022-01-01',
-        userId: 4,
-        secNumber: '789',
-        inscriptionType: '789',
-        UF: 'AL',
-        graduateDegree: 'Especialista',
-        description: 'Advogado especialista em direito civil',
-        image: 'https://images.jota.info/wp-content/uploads/2022/05/ministro-alexandre-de-moraes.jpg',
       },
       {
         OAB: '345678',

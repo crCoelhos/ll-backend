@@ -3,8 +3,7 @@ const db = require('../models');
 
 
 
-// TODO add search by reagion
-// TODO 
+// TODO add search by region
 
 async function multipleFieldLawyerSearch(req, res) {
     const searchString = req.params.searchString;

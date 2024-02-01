@@ -2,70 +2,12 @@ const bcrypt = require('bcrypt');
 const db = require('../models');
 const User = db.User;
 const Lawyer = db.Lawyer;
+const Expertise = db.Expertise;
+const LawyerExpertise = db.LawyerExpertises;
 const Address = db.Address;
 const UserAddress = db.UserAddress;
+const LawyerExpertises = db.LawyerExpertises;
 
-// async function createUser(req, res) {
-//     const t = await db.sequelize.transaction();
-//     try {
-//         const { name, email, CPF, birthdate, password, OAB, riteDate, roleId, address } = req.body;
-
-//         let user = await User.findOne({
-//             where: { CPF: CPF }
-//         });
-
-//         if (!user) {
-//             const hashedPassword = await bcrypt.hash(password, 10);
-//             user = await User.create({
-//                 name: name,
-//                 email: email,
-//                 CPF: CPF,
-//                 birthdate: birthdate,
-//                 password: hashedPassword,
-//                 roleId: roleId
-//             }, { transaction: t });
-
-//             console.log('Usuário criado com sucesso.');
-
-//             //  endereço depois do user criaod
-//             const createdAddress = await Address.create({
-//                 street: address.street,
-//                 city: address.city,
-//                 state: address.state,
-//                 number: address.number,
-//                 CEP: address.CEP,
-//                 userId: user.id
-//             }, { transaction: t });
-
-//             console.log('Endereço criado com sucesso.');
-
-
-//         } else {
-//             console.log('Usuário já existe');
-//             res.status(400).json({ message: 'O usuário já existe.' });
-//             await t.rollback();
-//             return;
-//         }
-
-//         if (OAB && riteDate && UF && inscriptionType && secNumber) {
-//             console.log('CRIANDO LAWYER')
-//             const lawyer = await Lawyer.create({
-//                 OAB: OAB,
-//                 riteDate: riteDate,
-//                 userId: user.id
-//             }, { transaction: t });
-//             res.status(201).json(lawyer);
-//         } else {
-//             res.status(201).json(user);
-//         }
-
-//         await t.commit();
-//     } catch (err) {
-//         console.error('Erro no createUser:', err, req.body);
-//         await t.rollback();
-//         res.status(500).json({ message: 'Ocorreu um erro interno.' });
-//     }
-// }
 
 async function createUser(req, res) {
     const { name, email, CPF, birthdate, password, OAB, riteDate, address, secNumber, inscriptionType, UF } = req.body;
@@ -160,6 +102,7 @@ async function getUserByRequest(req, res) {
     try {
         const userId = req.user.id;
 
+
         const user = await User.findOne({
             where: { id: userId },
             attributes: {
@@ -167,11 +110,43 @@ async function getUserByRequest(req, res) {
             }
         });
 
+
+        const lawyer = await Lawyer.findOne({
+            where: { userId: userId },
+            include: [
+                {
+                    model: User,
+                    as: 'user',
+                    attributes: {
+                        exclude: ['password', 'passwordRecoveryToken']
+                    },
+                },
+                {
+                    model: Expertise,
+                    as: 'expertises',
+                    through: {
+                        model: LawyerExpertises,
+                        attributes: []
+                    },
+                    attributes: ['id', 'name']
+                }
+            ],
+        });
+
+
+        if (lawyer) {
+            return res.status(200).json(lawyer);
+        }
         res.status(200).json(user);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 }
+
+
+
+
+
 
 
 
