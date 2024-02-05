@@ -1,16 +1,16 @@
+
 'use strict';
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-
     static associate(models) {
       this.belongsTo(models.Role, {
         as: 'role',
         foreignKey: 'roleId',
       });
 
-      User.belongsToMany(models.Address, {
+      this.belongsToMany(models.Address, {
         through: models.UserAddress,
         foreignKey: 'userId',
         as: 'addresses',
@@ -31,10 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         as: 'lawyer',
       });
-
     }
-
-
   }
 
   User.init(
@@ -52,8 +49,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-      }
-      ,
+      },
       CPF: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -77,12 +73,12 @@ module.exports = (sequelize, DataTypes) => {
       isActive: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: true
+        defaultValue: true,
       },
       passwordRecoveryToken: {
         type: DataTypes.STRING,
-        allowNull: true
-      }
+        allowNull: true,
+      },
     },
     {
       sequelize,

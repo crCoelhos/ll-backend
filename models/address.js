@@ -1,11 +1,14 @@
+
+'use strict';
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
     class Address extends Model {
         static associate(models) {
-            Address.belongsTo(models.User, {
-                foreignKey: 'userId',
-                onDelete: 'CASCADE',
+            Address.belongsToMany(models.User, {
+                through: models.UserAddress,
+                foreignKey: 'addressId',
+                as: 'users',
             });
         }
     }
@@ -41,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
             sequelize,
             modelName: 'Address',
             tableName: 'Addresses',
+            
         }
     );
 

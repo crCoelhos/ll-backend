@@ -1,3 +1,5 @@
+// models/UserNotification.js
+'use strict';
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -6,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
             UserNotification.belongsTo(models.User, {
                 foreignKey: 'userId',
                 as: 'user',
+                allowNull: true, // Tornar a associação opcional
             });
 
             UserNotification.belongsTo(models.Notification, {
@@ -14,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
             });
         }
     }
+
     UserNotification.init(
         {
             isRead: {
@@ -28,5 +32,6 @@ module.exports = (sequelize, DataTypes) => {
             tableName: 'UserNotifications',
         }
     );
+
     return UserNotification;
 };

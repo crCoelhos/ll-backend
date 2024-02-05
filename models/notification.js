@@ -1,14 +1,18 @@
+// models/Notification.js
+'use strict';
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
     class Notification extends Model {
         static associate(models) {
-            Notification.hasMany(models.UserNotification, {
+            Notification.belongsToMany(models.User, {
+                through: models.UserNotification,
                 foreignKey: 'notificationId',
-                as: 'userNotifications',
+                as: 'users',
             });
         }
     }
+
     Notification.init(
         {
             title: {
@@ -30,5 +34,6 @@ module.exports = (sequelize, DataTypes) => {
             tableName: 'Notifications',
         }
     );
+
     return Notification;
 };

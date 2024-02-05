@@ -13,7 +13,8 @@ module.exports = {
         graduateDegree: 'Mestre',
         description: 'Advogado especialista em direito do consumidor',
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSYwRES33lEp2J0iTxKzAa_5sIf_oybIwVrDIF9fr-J6SrpVAnNFLnQGOMueqckpO2bsk&usqp=CAU',
-
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         OAB: '123456',
@@ -25,6 +26,8 @@ module.exports = {
         graduateDegree: 'Doutor',
         description: 'Advogado especialista em direito do trabalhador',
         image: 'https://i.imgur.com/3hBbZ2Y.png',
+        createdAt: new Date(),
+        updatedAt: new Date(),
 
       },
       {
@@ -37,6 +40,8 @@ module.exports = {
         graduateDegree: 'Bacharel',
         description: 'Advogado atuante em direito penal',
         image: 'content/uploads/2016/09/11230237/carmem-lucia.jpg',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         OAB: '111111',
@@ -48,6 +53,8 @@ module.exports = {
         graduateDegree: 'Especialista',
         description: 'Advogado especialista em direito ambiental',
         image: 'https://i.imgur.com/3hBbZ2Y.png',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         OAB: '222222',
@@ -59,6 +66,8 @@ module.exports = {
         graduateDegree: 'Bacharel',
         description: 'Advogado atuante em direito do consumidor',
         image: 'https://i.imgur.com/3hBbZ2Y.png',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ];
 

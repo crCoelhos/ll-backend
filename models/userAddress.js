@@ -1,3 +1,4 @@
+
 'use strict';
 const { Model } = require('sequelize');
 
@@ -6,15 +7,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       UserAddress.belongsTo(models.User, {
         foreignKey: 'userId',
-        onDelete: 'CASCADE',
+        as: 'user',
       });
+
       UserAddress.belongsTo(models.Address, {
         foreignKey: 'addressId',
-        onDelete: 'CASCADE',
+        as: 'address',
       });
     }
   }
-
 
   UserAddress.init(
     {

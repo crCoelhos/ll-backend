@@ -19,21 +19,22 @@ module.exports = {
       },
       {
         isRead: false,
-        userId: null,
         notificationId: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         isRead: false,
-        userId: null,
         notificationId: 4,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
     ];
 
-    await queryInterface.bulkInsert('UserNotifications', userNotificationsData, {});
+    await queryInterface.bulkInsert('UserNotifications', userNotificationsData, {
+      ignoreDuplicates: true,
+      validate: false,
+    });
   },
 
   down: async (queryInterface, Sequelize) => {
