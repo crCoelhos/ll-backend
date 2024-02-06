@@ -5,7 +5,7 @@ const Lawyer = db.Lawyer;
 const User = db.User;
 
 async function insertProcess(req, res) {
-    const { processNumber } = req.body;
+    const { processNumber, processTitle } = req.body;
 
     try {
         const userId = req.user.id;
@@ -34,6 +34,7 @@ async function insertProcess(req, res) {
         }
         const createdProcess = await ProcessNumber.create({
             processNumber: processNumber,
+            processTitle: processTitle ? processTitle : processNumber,
             lawyerId: lawyer.id,
         });
 
