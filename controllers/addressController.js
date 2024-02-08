@@ -3,6 +3,7 @@ const Address = db.Address;
 
 
 async function createAddress(req, res) {
+    
     try {
         const { state, street, number, city, CEP, userId } = req.body;
         const address = await Address.create({

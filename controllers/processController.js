@@ -23,7 +23,7 @@ async function insertProcess(req, res) {
 
         if (!lawyer) {
             return res.status(404).json({ message: 'Advogado não encontrado.' });
-        }
+        }   
 
         if (!processNumber) {
             return res.status(400).json({ message: 'Campo obrigatório ausente.' });

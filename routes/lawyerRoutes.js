@@ -10,9 +10,9 @@ router.get('/lawyer/teste', (req, res) => {
 
 router.post('/lawyer/create', lawyerController.createUser);
 router.get('/lawyer/all', lawyerController.getAllLawyers);
-router.get('/lawyer-user/:id', authMiddleware, lawyerController.getLawyerByUserId);
-router.get('/lawyer/:id', authMiddleware, lawyerController.getLawyerById);
-router.get('/lawyer-expertise/:id', authMiddleware, lawyerController.getAllLawyersByExpertise);
-router.get('/lawyer-state/:UF', authMiddleware, lawyerController.getAllLawyersByState);
+router.get('/lawyer-user/:id', lawyerController.getLawyerByUserId);
+router.get('/lawyer/:id', lawyerController.getLawyerById);
+router.get('/lawyer-expertise/:id', lawyerController.getAllLawyersByExpertise);
+router.get('/lawyer-state/:UF', lawyerController.getAllLawyersByState);
 
 module.exports = router;

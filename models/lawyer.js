@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       this.belongsToMany(models.Expertise, {
-        through: 'LawyerExpertise',
+        through: 'LawyerExpertises',
         foreignKey: 'lawyerId',
         as: 'expertises',
       });
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'lawyerId',
         as: 'processNumbers',
       });
-      
+
     }
   }
 
@@ -47,7 +47,19 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      elaboratedDescription: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      professionalDescription: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      callmeReason: {
+        type: DataTypes.TEXT,
         allowNull: true,
       },
       image: {
