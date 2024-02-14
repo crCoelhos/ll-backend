@@ -12,6 +12,7 @@ router.post('/user/create', userController.createUser);
 router.get('/users/', authMiddleware, userController.getAllUsers);
 router.get('/user/:id', authMiddleware, userController.getUserById);
 router.get('/user/', authMiddleware, userController.getUserByRequest);
+router.put('/user/', authMiddleware, userController.updateUserByRequest);
 router.put('/user/:id', authMiddleware, userController.updateUserById);
 router.delete('/user/:id', authMiddleware, userController.deleteUserById);
 

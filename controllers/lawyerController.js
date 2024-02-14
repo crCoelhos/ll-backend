@@ -96,12 +96,10 @@ async function getLawyerById(req, res) {
     }
 }
 
-
-
-
 async function getLawyerByUserId(req, res) {
+    console.log(req)
     try {
-        const id = req.params.id;
+        const id = req.user.id;
 
         const lawyer = await Lawyer.findOne({
             where: { userId: id },
@@ -133,6 +131,7 @@ async function getLawyerByUserId(req, res) {
         throw err;
     }
 }
+
 
 async function getAllLawyers(req, res) {
     try {
@@ -235,6 +234,39 @@ async function getAllLawyersByState(req, res) {
     }
 }
 
+async function updateUserByUserId(req, res) {
+    const userId = req.user.id;
+    const { OAB, riteDate, secNumber, inscriptionType, graduateDegree, description, elaboratedDescription, professionalDescription, callmeReason, image, UF } = req.body;
+
+    try {
+        const lawyer = await Lawyer.findOne({ where: { userId } });
+
+        if (!lawyer) {
+            return res.status(404).json({ message: 'Advogado não encontrado.' });
+        }
+
+        if (OAB) lawyer.OAB = OAB;
+        if (riteDate) lawyer.riteDate = riteDate;
+        if (secNumber) lawyer.secNumber = secNumber;
+        if (inscriptionType) lawyer.inscriptionType = inscriptionType;
+        if (UF) lawyer.UF = UF;
+        if (graduateDegree) lawyer.graduateDegree = graduateDegree;
+        if (description) lawyer.description = description;
+        if (elaboratedDescription) lawyer.elaboratedDescription = elaboratedDescription;
+        if (professionalDescription) lawyer.professionalDescription = professionalDescription;
+        if (callmeReason) lawyer.callmeReason = callmeReason;
+        if (image) lawyer.image = image;
+
+
+        await lawyer.save();
+
+        res.status(200).json(lawyer);
+    } catch (err) {
+        console.error('Erro ao atualizar informações do advogado por ID de usuário:', err);
+        res.status(500).json({ message: 'Ocorreu um erro interno.' });
+        throw err;
+    }
+}
 
 module.exports = {
     createUser,
@@ -242,5 +274,6 @@ module.exports = {
     getLawyerById,
     getLawyerByUserId,
     getAllLawyersByState,
-    getAllLawyersByExpertise
+    getAllLawyersByExpertise,
+    updateUserByUserId
 };

@@ -168,12 +168,9 @@ async function updateUserById(req, res) {
         res.status(500).json({ message: err.message });
     }
 }
-
 async function updateUserByRequest(req, res) {
     try {
-
-
-        const id = req.params.id;
+        const id = req.user.id;
         if (!id) {
             res.json({ message: "Você não passou o id no paramentro" })
         }
@@ -194,6 +191,7 @@ async function updateUserByRequest(req, res) {
         res.status(500).json({ message: err.message });
     }
 }
+
 
 
 async function deleteUserById(req, res) {
@@ -220,6 +218,7 @@ module.exports = {
     getAllUsers,
     getUserById,
     getUserByRequest,
+    updateUserByRequest,
     updateUserById,
     deleteUserById,
 }
