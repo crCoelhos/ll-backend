@@ -5,11 +5,12 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Notification extends Model {
         static associate(models) {
-            Notification.belongsToMany(models.User, {
+            this.belongsToMany(models.User, {
                 through: models.UserNotification,
                 foreignKey: 'notificationId',
-                as: 'users',
+                as: 'notificationUsers',
             });
+
         }
     }
 

@@ -4,6 +4,18 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const usersData = [
       {
+        name: 'workaround',
+        email: 'config@admin.com',
+        phoneNumber: '5766',
+        CPF: '5766',
+        birthdate: '1990-01-01',
+        password: await bcrypt.hash('admin', 10),
+        isActive: true,
+        roleId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
         name: 'Administrador',
         email: 'admin@admin.com',
         phoneNumber: '5764',

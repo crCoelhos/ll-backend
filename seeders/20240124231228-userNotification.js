@@ -5,7 +5,7 @@ module.exports = {
     const userNotificationsData = [
       {
         isRead: false,
-        userId: 1,
+        userId: 2,
         notificationId: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -19,13 +19,43 @@ module.exports = {
       },
       {
         isRead: false,
+        userId: 6,
         notificationId: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         isRead: false,
-        notificationId: 4,
+        userId: 6,
+        notificationId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        isRead: false,
+        userId: 1,
+        notificationId: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        isRead: false,
+        userId: 1,
+        notificationId: 6,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        isRead: false,
+        userId: 1,
+        notificationId: 7,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        isRead: false,
+        userId: 1,
+        notificationId: 8,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
