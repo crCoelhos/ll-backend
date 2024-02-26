@@ -35,6 +35,7 @@ const modelPaths = [
   path.join(__dirname, 'appointmentStatus.js'),
   path.join(__dirname, 'appointment.js'),
   path.join(__dirname, 'follower.js'),
+  path.join(__dirname, 'dailyWatch.js'),
 ];
 
 

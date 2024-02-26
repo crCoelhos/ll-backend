@@ -3,6 +3,8 @@ const config = require(__dirname + '/../config/config.js')[env];
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User, Address } = require('../models');
+const { getAllProcesses } = require('./processController');
+const { scraper } = require('./scraperComunicationController');
 
 async function signup(req, res) {
   try {
@@ -51,7 +53,8 @@ async function signin(req, res) {
       return res.status(401).json({ error: 'Senha incorreta.' });
     }
 
-    // TODO: Discutir ser coloco tentativas de login, ai deixar a pessoa sem tentar entrar
+    // TODO: Discutir se coloca tentativas de login, ai deixar a pessoa sem tentar entrar
+
 
     const { id, name, roleId, isActive } = user;
     const token = jwt.sign({ userId: id }, config.jwtSecret, {

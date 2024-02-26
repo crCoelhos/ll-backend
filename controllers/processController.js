@@ -48,6 +48,7 @@ async function insertProcess(req, res) {
 async function getAllProcesses(req, res) {
     try {
         const userId = req.user.id;
+        
 
         const lawyer = await db.Lawyer.findOne({
             where: { userId: userId },
