@@ -97,9 +97,41 @@ async function getLawyerById(req, res) {
 }
 
 async function getLawyerByUserId(req, res) {
+    try {
+        const id = req.params.id;
+
+        const user = await User.findOne({
+            where: { id: id },
+            include: [
+                {
+                    model: Lawyer,
+                    as: 'lawyer',
+                },
+            ],
+            attributes: {
+                exclude: ['password', 'passwordRecoveryToken']
+            },
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: 'Advogado não encontrado.' });
+        }
+
+        res.status(200).json(user);
+
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+        console.error('Erro ao obter advogado por ID de usuário:', err);
+        throw err;
+    }
+}
+
+
+async function getUserByLawyerId(req, res) {
     console.log(req)
     try {
-        const id = req.user.id;
+        const id = req.params.id;
 
         const lawyer = await Lawyer.findOne({
             where: { userId: id },
@@ -122,6 +154,11 @@ async function getLawyerByUserId(req, res) {
                 }
             ],
         });
+
+        if (!lawyer) {
+            return res.status(404).json({ message: 'Advogado não encontrado.' });
+        }
+
         res.status(200).json(lawyer);
 
 
@@ -273,6 +310,7 @@ module.exports = {
     getAllLawyers,
     getLawyerById,
     getLawyerByUserId,
+    getUserByLawyerId,
     getAllLawyersByState,
     getAllLawyersByExpertise,
     updateUserByUserId

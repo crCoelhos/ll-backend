@@ -108,10 +108,50 @@ const markNotificationAsRead = async (req, res) => {
             return res.status(404).json({ error: 'Associação UserNotification não encontrada' });
         }
 
-        userNotification.isRead = true;
+        userNotification.isRead = 1;
         await userNotification.save();
 
-        console.log('Notificação marcada como lida com sucesso!');
+        console.log('Notificação ' + notificationId + ' do user ' + userId + ' marcada como lida com sucesso!');
+        return res.status(200).json({ message: 'Notificação marcada como lida com sucesso!' });
+    } catch (error) {
+        console.error('Erro ao marcar notificação como lida:', error);
+        return res.status(500).json({ error: 'Erro ao marcar notificação como lida' });
+    }
+};
+
+const markNotificationAsUnread = async (req, res) => {
+    try {
+        const { notificationId } = req.body;
+        const userId = req.user.id;
+
+        const user = await User.findByPk(userId);
+        if (!user) {
+            console.error('Usuário não encontrado');
+            return res.status(404).json({ error: 'Usuário não encontrado' });
+        }
+
+        const notification = await Notification.findByPk(notificationId);
+        if (!notification) {
+            console.error('Notificação não encontrada');
+            return res.status(404).json({ error: 'Notificação não encontrada' });
+        }
+
+        const userNotification = await UserNotification.findOne({
+            where: {
+                userId,
+                notificationId,
+            },
+        });
+
+        if (!userNotification) {
+            console.error('Associação UserNotification não encontrada');
+            return res.status(404).json({ error: 'Associação UserNotification não encontrada' });
+        }
+
+        userNotification.isRead = 1;
+        await userNotification.save();
+
+        console.log('Notificação ' + notificationId + ' do user ' + userId + ' marcada como lida com sucesso!');
         return res.status(200).json({ message: 'Notificação marcada como lida com sucesso!' });
     } catch (error) {
         console.error('Erro ao marcar notificação como lida:', error);
@@ -165,5 +205,6 @@ module.exports = {
     getAllUserNotifications,
     getAllGlobalNotifications,
     markAllNotificationsAsRead,
-    markNotificationAsRead
+    markNotificationAsRead,
+    markNotificationAsUnread,
 };

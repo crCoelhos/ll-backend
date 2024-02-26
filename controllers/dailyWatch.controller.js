@@ -1,7 +1,7 @@
 const axios = require('axios');
 const cron = require('node-cron');
 
-const { DailyWatch, ProcessNumber } = require('../models');
+const { DailyWatch, ProcessNumber, User, Lawyer, Notification } = require('../models');
 
 
 const URL = 'http://localhost:3033'
@@ -12,6 +12,7 @@ async function scrapeAndSaveApiResponses(req, res) {
 
         for (const process of processes) {
             const processNumber = process.processNumber;
+
 
             try {
                 const response = await axios.get(`${URL}/process/v1/main/${processNumber}`);
@@ -35,6 +36,8 @@ async function scrapeAndSaveApiResponses(req, res) {
                         response: apiResponses,
                     });
                     console.log(`ApiResponse(s) salvo(s) para o processo: ${processNumber}`);
+
+
                 } else {
                     const existingContent = dailyWatchEntry.content || [];
                     for (const apiResponse of apiResponses) {
@@ -47,6 +50,36 @@ async function scrapeAndSaveApiResponses(req, res) {
                     console.log(`ApiResponse(s) atualizado(s) para o processo: ${processNumber}`);
                     await dailyWatchEntry.save();
                 }
+
+
+
+
+
+                const lawyerId = process.lawyerId
+
+                const title = 'Movimentação';
+                const message = ` houve movimentação no monitorado por: ${JSON.stringify(processNumber)}`;
+                const notification = await Notification.create({
+                    title: title,
+                    message: message,
+                    isRead: 0,
+                });
+
+                console.log('Notification criada:', notification)
+
+                const user = await User.findOne({
+                    include: [
+                        {
+                            model: Lawyer,
+                            as: 'lawyer',
+                            where: { id: lawyerId },
+                        },
+                    ],
+                });
+
+                await user.addNotification(notification);
+                console.log('Notification associada ao usuário', user.id);
+
             } catch (error) {
                 if (error.response && error.response.status === 404) {
                     console.log(`Processo não encontrado para o número: ${processNumber}`);
@@ -79,7 +112,7 @@ async function getAllApiResponses(req, res) {
     }
 }
 
-cron.schedule('0 0 * * *', async () => {
+cron.schedule('0 */4 * * *', async () => {
     await scrapeAndSaveApiResponses();
 });
 
