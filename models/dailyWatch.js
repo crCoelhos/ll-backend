@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
                 unique: true,
             },
 
-            content: {
-                type: DataTypes.TEXT,
+            response: {
+                type: DataTypes.JSON,
                 allowNull: true,
             },
         },

@@ -11,6 +11,7 @@ router.get('/lawyer/teste', (req, res) => {
 
 router.post('/lawyer-process/watch', authMiddleware, processController.insertProcess);
 router.get('/lawyer-process/all', authMiddleware, processController.getAllProcesses);
+router.get('/user-processes/all', authMiddleware, processController.getAllUserProcesses);
 
 
 router.get('/lawyer-process/processes', authMiddleware, dailyWatchController.scrapeAndSaveApiResponses);
