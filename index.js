@@ -2,7 +2,7 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const dotenv = require('dotenv');
-dotenv.config({path: './config/config.env'});
+dotenv.config({ path: './config/config.env' });
 
 
 const authRoutes = require('./routes/authRoutes');
@@ -14,7 +14,17 @@ app.use('/auth', authRoutes);
 const routes = require('./routes')
 
 
-app.use(cors());
+// app.use(cors());
+
+const corsOptions = {
+  origin: 'https://legaliga.vercel.app',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+
 app.use(routes);
 
 const PORT = process.env.PORT || 3000;
