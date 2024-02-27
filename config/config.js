@@ -5,6 +5,7 @@ dotenv.config({path: './config/.env'});
 
 module.exports = {
   development: {
+    use_env_variable: 'DATABASE_URL',
     port: process.env.DB_PORT,
     jwtSecret: process.env.JWT_SECRET,
     username: process.env.DB_USER,
@@ -21,3 +22,6 @@ module.exports = {
     timezone: '-05:00',
   },
 };
+
+console.log('user: ', process.env.DB_USER)
+console.log('user: ', process.env.DB_PASSWORD)
