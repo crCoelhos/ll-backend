@@ -1,7 +1,10 @@
 
 const axios = require('axios');
+const dotenv = require('dotenv');
+dotenv.config({path: '../config/config.env'});
 
-const URL = 'http://localhost:3033'
+
+const URL = process.env.SCRAPER_API_URL;
 
 
 async function scraper(req, res) {

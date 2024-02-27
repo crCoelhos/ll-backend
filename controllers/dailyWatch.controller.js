@@ -1,10 +1,12 @@
 const axios = require('axios');
 const cron = require('node-cron');
+const dotenv = require('dotenv');
+dotenv.config({path: '../config/config.env'});
+
 
 const { DailyWatch, ProcessNumber, User, Lawyer, Notification } = require('../models');
 
-
-const URL = 'http://localhost:3033'
+const URL = process.env.SCRAPER_API_URL;
 
 async function scrapeAndSaveApiResponses(req, res) {
     try {
