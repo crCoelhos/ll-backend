@@ -129,7 +129,7 @@ async function getLawyerByUserId(req, res) {
 
 
 async function getUserByLawyerId(req, res) {
-    console.log(req)
+
     try {
         const id = req.params.id;
 

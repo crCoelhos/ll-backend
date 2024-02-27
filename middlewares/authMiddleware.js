@@ -13,7 +13,6 @@ async function authMiddleware(req, res, next) {
         const decoded = jwt.verify(authHeader, config.jwtSecret);
         const user = await User.findByPk(decoded.userId);
         if (!user) {
-            console.log(decoded.userId)
             return res.status(401).json({ message: '(auth 1)Usuário não encontrado.' });
         }
 

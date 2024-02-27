@@ -8,11 +8,9 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
-console.log('use_env_variable:', config.use_env_variable);
 
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
-
 
 const modelPaths = [
   path.join(__dirname, 'user.js'),
