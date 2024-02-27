@@ -1,4 +1,7 @@
-require('dotenv').config();
+
+const dotenv = require('dotenv');
+dotenv.config({path: './config/config.env'});
+
 
 module.exports = {
   development: {
@@ -10,8 +13,14 @@ module.exports = {
     host: process.env.DB_HOST,
     dialect: 'mysql',
     dialectOptions: {
-      useUTC: false,
+      useUTC: false, 
+      ssl: {
+        rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true',
+      }
     },
     timezone: '-05:00',
   },
 };
+
+console.log('user: ', process.env.DB_USER)
+console.log('user: ', process.env.DB_PASSWORD)

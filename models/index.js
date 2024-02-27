@@ -41,6 +41,20 @@ const modelPaths = [
 
 modelPaths.forEach(file => {
   const model = require(file)(sequelize, Sequelize.DataTypes);
+
+  model.init(
+    model.rawAttributes,
+    {
+      sequelize,
+      modelName: model.name,
+      tableName: model.tableName || model.options.tableName,
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_general_ci',
+      ...model.options,
+    }
+  );
+
+
   db[model.name] = model;
 });
 
@@ -61,7 +75,7 @@ async function syncDatabase() {
   try {
     await sequelize.sync();
     // await sequelize.sync({ alter: true });
-    // await sequelize.sync({ alter: true, force: true  });
+    // await sequelize.sync({ alter: true, force: true });
   } catch (error) {
     console.log(error)
   }
