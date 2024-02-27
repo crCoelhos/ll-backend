@@ -17,7 +17,7 @@ const routes = require('./routes')
 // app.use(cors());
 
 const corsOptions = {
-  origin: 'https://legaliga.vercel.app',
+  origin: process.env.CORS_ORIGIN,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
