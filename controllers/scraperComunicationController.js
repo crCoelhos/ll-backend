@@ -1,7 +1,7 @@
 
 const axios = require('axios');
 const dotenv = require('dotenv');
-dotenv.config({path: '../config/config.env'});
+dotenv.config({path: '../.env'});
 
 
 const URL = process.env.SCRAPER_API_URL;

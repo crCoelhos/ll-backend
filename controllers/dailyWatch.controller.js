@@ -1,8 +1,7 @@
 const axios = require('axios');
 const cron = require('node-cron');
 const dotenv = require('dotenv');
-dotenv.config({path: '../config/config.env'});
-
+dotenv.config({ path: './.env' });
 
 const { DailyWatch, ProcessNumber, User, Lawyer, Notification } = require('../models');
 
