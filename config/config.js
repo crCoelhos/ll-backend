@@ -5,6 +5,7 @@ dotenv.config({path: './config/.env'});
 
 module.exports = {
   development: {
+    use_env_variable: 'DATABASE_URL',
     port: process.env.DB_PORT,
     jwtSecret: process.env.JWT_SECRET,
     username: process.env.DB_USER,
