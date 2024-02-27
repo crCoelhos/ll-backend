@@ -16,7 +16,7 @@ app.use('/auth', authRoutes);
 
 
 const corsOptions = {
-  origin: 'https://legaliga-api.vercel.app',
+  origin: 'process.env.CORS_ORIGIN',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
