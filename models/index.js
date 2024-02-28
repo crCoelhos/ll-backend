@@ -4,14 +4,22 @@
 const path = require('path');
 const Sequelize = require('sequelize');
 const process = require('process');
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.js')[env];
+
+const dotenv = require('dotenv');
+dotenv.config({ path: '/.env' });
+
+console.log('teste: ', process.env.TIDB_USER)
+
+
 const db = {};
 
-
-
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+const sequelize = new Sequelize({
   dialect: 'mysql',
+  username: process.env.TIDB_USER,
+  password: process.env.TIDB_PASSWORD,
+  host: process.env.TIDB_HOST,
+  port: process.env.TIDB_PORT,
+  database: process.env.TIDB_DATABASE,
   dialectOptions: {
     useUTC: false,
     ssl: {
@@ -20,8 +28,6 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
   },
   timezone: '-05:00',
 });
-
-
 
 const modelPaths = [
   path.join(__dirname, 'user.js'),

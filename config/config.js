@@ -6,7 +6,7 @@ dotenv.config({path: './config/.env'});
 
 module.exports = {
   development: {
-    use_env_variable: 'DATABASE_URL',
+    url: process.env.DATABASE_URL,
     port: process.env.TIDB_PORT,
     jwtSecret: process.env.JWT_SECRET,
     username: process.env.TIDB_USER,

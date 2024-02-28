@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "vercel-build": "npm install mysql2 && npm run build",
-    "build": "npm run build",
+    "build": "npx sequelize db:seed:all && node index.js",
     "start": "npx sequelize-cli db:migrate && node index.js",
     "dev": "nodemon index.js",
     "migration": "npx sequelize-cli db:migrate",
@@ -20,7 +20,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^2.2.5",
+    "mysql2": "^2.3.3",
     "node-cron": "^3.0.3",
     "nodemon": "^3.0.1",
     "sequelize": "^6.33.0",
