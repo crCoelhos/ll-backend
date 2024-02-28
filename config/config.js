@@ -22,6 +22,3 @@ module.exports = {
     timezone: '-05:00',
   },
 };
-
-console.log('user: ', process.env.DB_USER)
-console.log('user: ', process.env.DB_PASSWORD)
