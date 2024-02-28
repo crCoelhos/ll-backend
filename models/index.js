@@ -8,7 +8,6 @@ const process = require('process');
 const dotenv = require('dotenv');
 dotenv.config({ path: '/.env' });
 
-console.log('teste: ', process.env.TIDB_USER)
 
 
 const db = {};
