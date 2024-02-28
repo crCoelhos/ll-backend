@@ -64,7 +64,7 @@ async function signin(req, res) {
     res.status(200).json({ token, name, email, roleId, isActive });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro ao fazer login.' });
+    res.status(500).json({ error: 'Erro ao fazer login.', fullError: error.stack });
   }
 }
 
