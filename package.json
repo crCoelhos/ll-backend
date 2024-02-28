@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "vercel-build": "npm install mysql2 && npm run build",
+    "build": "npm run build",
     "start": "npx sequelize-cli db:migrate && node index.js",
     "dev": "nodemon index.js",
     "migration": "npx sequelize-cli db:migrate",
