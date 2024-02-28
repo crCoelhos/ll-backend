@@ -1,4 +1,5 @@
 require('dotenv').config();
+const mysql2 = require('mysql2');
 
 module.exports = {
   development: {
@@ -10,7 +11,7 @@ module.exports = {
     database: process.env.TIDB_DATABASE,
     host: process.env.TIDB_HOST,
     dialect: 'mysql',
-    dialectModule: "mysql2",
+    dialectModule: mysql2,
     dialectOptions: {
       ssl: {
         ca: './isrgrootx1.pem',
