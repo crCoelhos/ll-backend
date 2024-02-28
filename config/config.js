@@ -10,6 +10,7 @@ module.exports = {
     database: process.env.TIDB_DATABASE,
     host: process.env.TIDB_HOST,
     dialect: 'mysql',
+    dialectModule: "mysql2",
     dialectOptions: {
       // useUTC: false, 
       ssl: {

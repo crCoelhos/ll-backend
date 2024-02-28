@@ -4,6 +4,7 @@
 const path = require('path');
 const Sequelize = require('sequelize');
 const process = require('process');
+const mysql2 = require('mysql2');
 
 const dotenv = require('dotenv');
 dotenv.config({ path: '/.env' });
@@ -12,8 +13,20 @@ dotenv.config({ path: '/.env' });
 
 const db = {};
 
+// const sequelize = new Sequelize(process.env.DATABASE_URL, {
+//   dialect: 'mysql',
+//   dialectModule: require('mysql2'),
+//  dialectOptions: {
+//   useUTC: false,
+//   ssl: {
+//     rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true',
+//   }
+// },
+// });
+
 const sequelize = new Sequelize({
   dialect: 'mysql',
+  dialectModule: mysql2,
   username: process.env.TIDB_USER,
   password: process.env.TIDB_PASSWORD,
   host: process.env.TIDB_HOST,
@@ -82,17 +95,17 @@ Object.keys(db).forEach(modelName => {
 
 
 
-// async function syncDatabase() {
-//   try {
-//     await sequelize.sync();
-//     // await sequelize.sync({ alter: true });
-//     // await sequelize.sync({ alter: true, force: true });
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
+async function syncDatabase() {
+  try {
+    await sequelize.sync();
+    // await sequelize.sync({ alter: true });
+    await sequelize.sync({ alter: true, force: true });
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-// syncDatabase()
+syncDatabase()
 
 
 db.sequelize = sequelize;
