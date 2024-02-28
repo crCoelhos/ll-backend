@@ -4,7 +4,7 @@ const { signup, signin } = require('../controllers/authController.js');
 const router = express.Router();
 
 router.get('/auth/test', (req, res) => {
-    res.send('legaliga api running');
+    res.send('legaliga auth api running');
 });
 
 router.post('/signup', signup);

@@ -18,6 +18,11 @@ const processRoutes = require('./processRoutes');
 const notificationRoutes = require('./notificationRoutes');
 const followRoutes = require('./followRoutes');
 
+
+router.get('/v1/', (req, res) => {
+    res.send('legaliga v1/api running');
+});
+
 router.use('/v1', authRoutes);
 router.use('/v1', userRoutes);
 router.use('/v1', lawyerRoutes);
