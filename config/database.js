@@ -10,7 +10,6 @@
 //         dialect: 'mysql',
 //         port: process.env.DB_PORT,
 //         dialectOptions: {
-//             useUTC: false,
 //             ssl: {
 //                 rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true',
 //             }

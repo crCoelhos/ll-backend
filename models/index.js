@@ -17,7 +17,6 @@ const db = {};
 //   dialect: 'mysql',
 //   dialectModule: require('mysql2'),
 //  dialectOptions: {
-//   useUTC: false,
 //   ssl: {
 //     rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true',
 //   }
@@ -33,7 +32,6 @@ const sequelize = new Sequelize({
   port: process.env.TIDB_PORT,
   database: process.env.TIDB_DATABASE,
   dialectOptions: {
-    useUTC: false,
     ssl: {
       rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true',
     }

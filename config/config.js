@@ -12,7 +12,6 @@ module.exports = {
     dialect: 'mysql',
     dialectModule: "mysql2",
     dialectOptions: {
-      // useUTC: false, 
       ssl: {
         ca: './isrgrootx1.pem',
         rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true',
@@ -30,7 +29,6 @@ module.exports = {
     host: process.env.TIDB_HOST,
     dialect: 'mysql',
     dialectOptions: {
-      // useUTC: false, 
       ssl: {
         ca: './isrgrootx1.pem',
         rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true',
@@ -55,7 +53,6 @@ module.exports = {
 //     host: process.env.DB_HOST,
 //     dialect: 'mysql',
 //     dialectOptions: {
-//       useUTC: false,
 //       ssl: {
 //         rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true',
 //       }
