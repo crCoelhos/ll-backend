@@ -1,8 +1,4 @@
-
-
-const dotenv = require('dotenv');
-dotenv.config({path: './config/.env'});
-
+require('dotenv').config();
 
 module.exports = {
   development: {
@@ -15,8 +11,27 @@ module.exports = {
     host: process.env.TIDB_HOST,
     dialect: 'mysql',
     dialectOptions: {
-      useUTC: false, 
+      // useUTC: false, 
       ssl: {
+        ca: './isrgrootx1.pem',
+        rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true',
+      }
+    },
+    timezone: '-05:00',
+  },
+  test: {
+    url: process.env.DATABASE_URL,
+    port: process.env.TIDB_PORT,
+    jwtSecret: process.env.JWT_SECRET,
+    username: process.env.TIDB_USER,
+    password: process.env.TIDB_PASSWORD,
+    database: process.env.TIDB_DATABASE,
+    host: process.env.TIDB_HOST,
+    dialect: 'mysql',
+    dialectOptions: {
+      // useUTC: false, 
+      ssl: {
+        ca: './isrgrootx1.pem',
         rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true',
       }
     },
@@ -39,7 +54,7 @@ module.exports = {
 //     host: process.env.DB_HOST,
 //     dialect: 'mysql',
 //     dialectOptions: {
-//       useUTC: false, 
+//       useUTC: false,
 //       ssl: {
 //         rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true',
 //       }
