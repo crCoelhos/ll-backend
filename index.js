@@ -3,12 +3,14 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const routes = require('./routes');
-const authRoutes = require('./routes/authRoutes');
+
+const db = require('./models');
 
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 
-app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
   res.send('legaliga api running');
@@ -17,6 +19,15 @@ app.get('/', (req, res) => {
 app.use(routes);
 
 const PORT = process.env.PORT;
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+
+db.sequelize
+  .authenticate()
+  .then(() => {
+    console.log('successfull connection');
+    app.listen(PORT, () => {
+      console.log(`api running at ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error('connection failed: ', error);
+  });
