@@ -86,8 +86,8 @@ Object.keys(db).forEach(modelName => {
 async function syncDatabase() {
   try {
     await sequelize.sync();
-    // await sequelize.sync({ alter: true });
-    await sequelize.sync({ alter: true, force: true });
+    await sequelize.sync({ alter: true });
+    // await sequelize.sync({ alter: true, force: true });
   } catch (error) {
     console.log(error)
   }
