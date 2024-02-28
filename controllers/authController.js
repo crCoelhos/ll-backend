@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const { User, Address } = require('../models');
 const { getAllProcesses } = require('./processController');
 const { scraper } = require('./scraperComunicationController');
+const jwtSecret = process.env.JWT_SECRET;
 
 async function signup(req, res) {
   try {
@@ -32,7 +33,7 @@ async function signup(req, res) {
     res.status(201).json({ user });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro ao criar usuário.' });
+    res.status(500).json({ error: 'Erro ao fazer login.', fullError: error.stack });
   }
 }
 
@@ -57,14 +58,14 @@ async function signin(req, res) {
 
 
     const { id, name, roleId, isActive } = user;
-    const token = jwt.sign({ userId: id }, config.jwtSecret, {
+    const token = jwt.sign({ userId: id }, jwtSecret, {
       expiresIn: '1h',
     });
 
     res.status(200).json({ token, name, email, roleId, isActive });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro ao fazer login.', fullError: error.stack });
+    res.status(500).json({ error: 'Erro ao fazer login.' });
   }
 }
 
@@ -78,7 +79,7 @@ async function requestPasswordReset(req, res) {
       return res.status(404).json({ error: 'Usuário não encontrado.' });
     }
 
-    const resetToken = jwt.sign({ userId: user.id }, config.jwtSecret, { expiresIn: '1h' });
+    const resetToken = jwt.sign({ userId: user.id }, jwtSecret, { expiresIn: '1h' });
 
     await user.update({ passwordRecoveryToken: resetToken });
 
@@ -95,7 +96,7 @@ async function resetPassword(req, res) {
   try {
     const { token, newPassword } = req.body;
 
-    const decodedToken = jwt.verify(token, config.jwtSecret);
+    const decodedToken = jwt.verify(token, jwtSecret);
 
     const user = await User.findByPk(decodedToken.userId);
 
