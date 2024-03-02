@@ -10,10 +10,10 @@ const LawyerExpertises = db.LawyerExpertises;
 
 
 async function createUser(req, res) {
-    const { name, email, CPF, birthdate, password, OAB, riteDate, address, secNumber, inscriptionType, UF } = req.body;
+    const { name, email, CPF, birthdate, password, phoneNumber, OAB, riteDate, address, secNumber, inscriptionType, UF } = req.body;
 
     try {
-        if (!name || !email || !CPF || !birthdate || !password) {
+        if (!name || !email || !CPF || !birthdate || !password || !phoneNumber) {
             return res.status(400).json({ message: 'Campos obrigatórios ausentes.' });
         }
 
@@ -29,6 +29,7 @@ async function createUser(req, res) {
             CPF: CPF,
             birthdate: birthdate,
             password: hashedPassword,
+            phoneNumber: phoneNumber,
             roleId: 5
         });
 
